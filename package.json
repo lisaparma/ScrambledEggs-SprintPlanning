@@ -1,12 +1,12 @@
 {
-  "name": "DynamicWebSite-template",
-  "version": "0.1.0",
+  "name": "NewBaconMonster-SprintPlanning",
+  "version": "0.0.1",
   "private": true,
-  "homepage": "https://lisaparma.github.io/DynamicWebSite-template",
+  "homepage": "https://lisaparma.github.io/NewBaconMonster-SprintPlanning",
   "dependencies": {
     "gh-pages": "2.0.1",
-    "lodash": "^4.17.15",
-    "node-sass": "^4.12.0",
+    "lodash": "4.17.15",
+    "node-sass": "4.12.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-router-dom": "^5.0.1",

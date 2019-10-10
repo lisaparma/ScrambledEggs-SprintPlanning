@@ -4,6 +4,6 @@ import "../style/App.scss";
 
 export function HomePage() {
   return (
-    <div className="page">Test</div>
+    <div className="page">NewBaconMonster-SprintPlanning</div>
   )
 }
