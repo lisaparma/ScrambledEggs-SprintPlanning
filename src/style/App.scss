@@ -1,0 +1,19 @@
+@import "variables";
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  background-color: $background-color;
+}
+
+.page {
+  .pageDiv {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+  }
+}
