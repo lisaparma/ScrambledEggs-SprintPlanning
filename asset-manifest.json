@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/NewBaconMonster-SprintPlanning/static/css/main.4bc93b25.chunk.css",
+    "main.js": "/NewBaconMonster-SprintPlanning/static/js/main.7fbc6e8f.chunk.js",
+    "main.js.map": "/NewBaconMonster-SprintPlanning/static/js/main.7fbc6e8f.chunk.js.map",
+    "runtime~main.js": "/NewBaconMonster-SprintPlanning/static/js/runtime~main.ec90d83c.js",
+    "runtime~main.js.map": "/NewBaconMonster-SprintPlanning/static/js/runtime~main.ec90d83c.js.map",
+    "static/js/2.961504e1.chunk.js": "/NewBaconMonster-SprintPlanning/static/js/2.961504e1.chunk.js",
+    "static/js/2.961504e1.chunk.js.map": "/NewBaconMonster-SprintPlanning/static/js/2.961504e1.chunk.js.map",
+    "index.html": "/NewBaconMonster-SprintPlanning/index.html",
+    "precache-manifest.80f98724189d91b566852b6b35bff12b.js": "/NewBaconMonster-SprintPlanning/precache-manifest.80f98724189d91b566852b6b35bff12b.js",
+    "service-worker.js": "/NewBaconMonster-SprintPlanning/service-worker.js",
+    "static/css/main.4bc93b25.chunk.css.map": "/NewBaconMonster-SprintPlanning/static/css/main.4bc93b25.chunk.css.map"
+  }
+}
