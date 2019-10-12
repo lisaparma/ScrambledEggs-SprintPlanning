@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "00e1670d2f8ef5d8dd9715ae58861965",
+    "revision": "2f4def785fc95e0705fd47c134c467cf",
     "url": "/NewBaconMonster-SprintPlanning/index.html"
   },
   {
-    "revision": "9ce7ae4074d26531cbb9",
-    "url": "/NewBaconMonster-SprintPlanning/static/css/main.43311ca2.chunk.css"
+    "revision": "3f76ad72e8ad4c2b769a",
+    "url": "/NewBaconMonster-SprintPlanning/static/css/main.11e7874e.chunk.css"
   },
   {
     "revision": "1397220332d188d0aeaa",
     "url": "/NewBaconMonster-SprintPlanning/static/js/2.98eab1db.chunk.js"
   },
   {
-    "revision": "9ce7ae4074d26531cbb9",
-    "url": "/NewBaconMonster-SprintPlanning/static/js/main.3c577736.chunk.js"
+    "revision": "3f76ad72e8ad4c2b769a",
+    "url": "/NewBaconMonster-SprintPlanning/static/js/main.f60cf223.chunk.js"
   },
   {
     "revision": "bc8b31913a0131995847",
