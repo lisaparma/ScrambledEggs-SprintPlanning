@@ -42,22 +42,34 @@ export class TeamMate extends React.Component {
         </div>
 
         <div className="column">
-          <input type="number" value={mate.d} onChange={this._onChangeD}/>
+          <input
+            type="number"
+            value={mate.d}
+            min={0}
+            max={100}
+            onChange={this._onChangeD}
+          />
           <span>d</span>
-          <input type="number" value={mate.h} onChange={this._onChangeH}/>
+          <input
+            type="number"
+            value={mate.h}
+            min={0}
+            max={100}
+            onChange={this._onChangeH}
+          />
           <span>h</span>
         </div>
 
         <div className="column">
-          <input type="number" value={mate.efficiency} onChange={this._onChangeEff} />
+          <input
+            type="number"
+            value={mate.efficiency}
+            min={0}
+            max={100}
+            onChange={this._onChangeEff}
+          />
           <span>%</span>
         </div>
-
-        <div className="column">
-          <span>{total}</span>
-        </div>
-
-
       </div>
     )
   }

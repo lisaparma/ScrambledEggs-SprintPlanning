@@ -64,18 +64,30 @@ export class HoursPlanning extends React.Component {
     return (
       <div className="hoursPlanning">
         <h3>{this.props.title}</h3>
-        <div className="table">
+        <div className="tableHeader">
+          <span className="column">Nome</span>
+          <span className="column">Ore lavorative</span>
+          <span className="column">Efficienza</span>
+          <span className="column">Emergenza</span>
+        </div>
+        <div className="tableContent">
           <div className="team">
             {table}
           </div>
-          <div className="emergency">
+          <div className="column emergency">
             <span>-</span>
-            <input type="number" value={this.state.emergency} onChange={this._onChangeEmergency} />
+            <input
+              type="number"
+              value={this.state.emergency}
+              min={0}
+              max={100}
+              onChange={this._onChangeEmergency}
+            />
             <span>%</span>
           </div>
         </div>
         <div className="total">
-          <p>Total: {this.state.total}</p>
+          <p>Total: {parseInt(this.state.total)}</p>
         </div>
       </div>
     )
