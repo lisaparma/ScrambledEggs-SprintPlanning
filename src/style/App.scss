@@ -11,9 +11,55 @@ html, body, #root {
 }
 
 .page {
-  .pageDiv {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
+
+  .heading {
+    margin: auto;
+    width: fit-content;
+
+    text-align: center;
   }
+
+  .sprintPlanning{
+    margin: auto;
+    width: fit-content;
+
+    input {
+      margin: 0 3px;
+      border: solid 1px #999999;
+      padding: 3px;
+      width: 30px;
+      border-radius: 5px;
+    }
+
+    .hoursPlanning {
+      margin: 1em;
+      border: solid 1px black;
+      padding: 1em;
+
+      .table {
+        display: flex;
+        flex-direction: row;
+        .team {
+          .teammate {
+
+            .column {
+              border-left: solid 1px #999999 ;
+              display: inline-block;
+              padding: 10px;
+              width: 120px;
+              height: 20px;
+            }
+            :first-child {
+              border-left: 0;
+            }
+          }
+        }
+        .emergency {
+          align-self: center;
+        }
+      }
+      .total {}
+    }
+  }
+
 }
