@@ -18,17 +18,23 @@ export class TeamMate extends React.Component {
 
   _onChangeD = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
-    this.props.dataBlock.changeValue(this.props.mate.name, 'd', value)
+    if (0 <= value) {
+      this.props.dataBlock.changeValue(this.props.mate.name, 'd', value);
+    }
   };
 
   _onChangeH = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
-    this.props.dataBlock.changeValue(this.props.mate.name, 'h', value)
+    if (0 <= value) {
+      this.props.dataBlock.changeValue(this.props.mate.name, 'h', value);
+    }
   };
 
   _onChangeEff = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
-    this.props.dataBlock.changeValue(this.props.mate.name, 'efficiency', value)
+    if (0 <= value && value <= 100) {
+      this.props.dataBlock.changeValue(this.props.mate.name, 'efficiency', value);
+    }
   };
 
   render() {

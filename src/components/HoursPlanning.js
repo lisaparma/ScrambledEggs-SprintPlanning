@@ -45,7 +45,9 @@ export class HoursPlanning extends React.Component {
 
   _onChangeEmergency = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
-    this.props.dataBlock.changeEmergency(value);
+    if (0 <= value && value <= 100) {
+      this.props.dataBlock.changeEmergency(value);
+    }
   };
 
   render() {

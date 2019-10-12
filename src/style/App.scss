@@ -2,22 +2,27 @@
 
 * {
   font-family: 'Roboto', sans-serif;
+  color: $black;
 }
 
 html, body, #root {
   height: 100%;
   width: 100%;
-  background-color: $background-color;
+  background-color: $white;
   font-size: 18px;
 }
 
 .page {
 
   .heading {
-    margin: auto;
+    margin: 2em auto;
     width: fit-content;
 
     text-align: center;
+
+    h1, h2 {
+      margin: 0;
+    }
   }
 
   .sprintPlanning{
@@ -50,10 +55,20 @@ html, body, #root {
 
     .hoursPlanning {
       margin: 1em;
-      border: solid 1px black;
+      border-radius: 5px;
       padding: 1em;
       height: fit-content;
 
+      background-color: #ffffff;
+      box-shadow: 0 1px 10px #999999;
+
+      h3 {
+
+        margin: 0 0 1em 0;
+        border-bottom: solid 3px $blue3;
+        padding-bottom: 5px;
+        color: $blue3;
+      }
 
       .tableHeader {
         .column {
@@ -93,11 +108,15 @@ html, body, #root {
       .total {
         width: fit-content;
         margin: auto;
+
+        p {
+          font-weight: bold;
+        }
       }
     }
 
     .hoursPlanning:hover {
-      box-shadow: 0 1px 10px $blue2;
+      box-shadow: 0 1px 10px $blue4;
     }
   }
 
