@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/NewBaconMonster-SprintPlanning/static/css/main.7e0d2ada.chunk.css",
-    "main.js": "/NewBaconMonster-SprintPlanning/static/js/main.115fc979.chunk.js",
-    "main.js.map": "/NewBaconMonster-SprintPlanning/static/js/main.115fc979.chunk.js.map",
+    "main.css": "/NewBaconMonster-SprintPlanning/static/css/main.43311ca2.chunk.css",
+    "main.js": "/NewBaconMonster-SprintPlanning/static/js/main.3c577736.chunk.js",
+    "main.js.map": "/NewBaconMonster-SprintPlanning/static/js/main.3c577736.chunk.js.map",
     "runtime~main.js": "/NewBaconMonster-SprintPlanning/static/js/runtime~main.ec90d83c.js",
     "runtime~main.js.map": "/NewBaconMonster-SprintPlanning/static/js/runtime~main.ec90d83c.js.map",
     "static/js/2.98eab1db.chunk.js": "/NewBaconMonster-SprintPlanning/static/js/2.98eab1db.chunk.js",
     "static/js/2.98eab1db.chunk.js.map": "/NewBaconMonster-SprintPlanning/static/js/2.98eab1db.chunk.js.map",
     "index.html": "/NewBaconMonster-SprintPlanning/index.html",
-    "precache-manifest.37657e3040594e9db6751b05ed276a29.js": "/NewBaconMonster-SprintPlanning/precache-manifest.37657e3040594e9db6751b05ed276a29.js",
+    "precache-manifest.a81fe8c621fe652ad050d90d075f5e78.js": "/NewBaconMonster-SprintPlanning/precache-manifest.a81fe8c621fe652ad050d90d075f5e78.js",
     "service-worker.js": "/NewBaconMonster-SprintPlanning/service-worker.js",
-    "static/css/main.7e0d2ada.chunk.css.map": "/NewBaconMonster-SprintPlanning/static/css/main.7e0d2ada.chunk.css.map"
+    "static/css/main.43311ca2.chunk.css.map": "/NewBaconMonster-SprintPlanning/static/css/main.43311ca2.chunk.css.map"
   }
 }
