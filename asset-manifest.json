@@ -1,15 +1,17 @@
 {
   "files": {
-    "main.css": "/NewBaconMonster-SprintPlanning/static/css/main.11e7874e.chunk.css",
-    "main.js": "/NewBaconMonster-SprintPlanning/static/js/main.f60cf223.chunk.js",
-    "main.js.map": "/NewBaconMonster-SprintPlanning/static/js/main.f60cf223.chunk.js.map",
+    "main.css": "/NewBaconMonster-SprintPlanning/static/css/main.52888758.chunk.css",
+    "main.js": "/NewBaconMonster-SprintPlanning/static/js/main.41ed4223.chunk.js",
+    "main.js.map": "/NewBaconMonster-SprintPlanning/static/js/main.41ed4223.chunk.js.map",
     "runtime~main.js": "/NewBaconMonster-SprintPlanning/static/js/runtime~main.ec90d83c.js",
     "runtime~main.js.map": "/NewBaconMonster-SprintPlanning/static/js/runtime~main.ec90d83c.js.map",
-    "static/js/2.98eab1db.chunk.js": "/NewBaconMonster-SprintPlanning/static/js/2.98eab1db.chunk.js",
-    "static/js/2.98eab1db.chunk.js.map": "/NewBaconMonster-SprintPlanning/static/js/2.98eab1db.chunk.js.map",
+    "static/js/2.5674e21b.chunk.js": "/NewBaconMonster-SprintPlanning/static/js/2.5674e21b.chunk.js",
+    "static/js/2.5674e21b.chunk.js.map": "/NewBaconMonster-SprintPlanning/static/js/2.5674e21b.chunk.js.map",
     "index.html": "/NewBaconMonster-SprintPlanning/index.html",
-    "precache-manifest.5ead0826b276e15227e3b05bd8060198.js": "/NewBaconMonster-SprintPlanning/precache-manifest.5ead0826b276e15227e3b05bd8060198.js",
+    "precache-manifest.7f1019bef00235d50381cf7f40907b51.js": "/NewBaconMonster-SprintPlanning/precache-manifest.7f1019bef00235d50381cf7f40907b51.js",
     "service-worker.js": "/NewBaconMonster-SprintPlanning/service-worker.js",
-    "static/css/main.11e7874e.chunk.css.map": "/NewBaconMonster-SprintPlanning/static/css/main.11e7874e.chunk.css.map"
+    "static/css/main.52888758.chunk.css.map": "/NewBaconMonster-SprintPlanning/static/css/main.52888758.chunk.css.map",
+    "static/media/bacon1.png": "/NewBaconMonster-SprintPlanning/static/media/bacon1.cd220d7d.png",
+    "static/media/bacon2.png": "/NewBaconMonster-SprintPlanning/static/media/bacon2.0a593846.png"
   }
 }
