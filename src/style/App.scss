@@ -29,6 +29,7 @@ html, body, #root {
 
     img {
       margin: 0 1em;
+      height: 70px;
       width: 100px;
     }
   }
@@ -146,7 +147,8 @@ html, body, #root {
 @media only screen and (max-width: 640px) {
   .heading {
     img {
-      height: 50px;
+      height: 35px !important;
+      width: 50px !important;
     }
   }
   .tableHeader {
