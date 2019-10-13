@@ -106,7 +106,7 @@ html, body, #root {
         }
         .emergency {
           display: flex;
-          border-left: solid 1px black;
+          border-left: solid 1px #999999;
           padding: 0;
           height: 120px;
           align-items: center;
@@ -141,4 +141,24 @@ html, body, #root {
     }
   }
 
+}
+
+@media only screen and (max-width: 640px) {
+  .heading {
+    img {
+      height: 50px;
+    }
+  }
+  .tableHeader {
+    display: none;
+  }
+  .tableContent {
+    display: flex;
+    flex-direction: column !important;
+
+    .teammate {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }
