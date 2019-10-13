@@ -5,11 +5,17 @@ import {HoursPlanning} from "./HoursPlanning";
 
 import "../style/App.scss";
 import {DataBlock} from "../DataBlock";
+import {forEach} from "lodash";
 
 export class HomePage extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      totalF: 0,
+      totalB: 0
+    };
+
     const frontEndTeam = [
       { name: 'Cataldo', d: 10, h: 0, efficiency: 70 },
       { name: 'Lisa', d: 6, h: 0, efficiency: 80 },
@@ -22,10 +28,27 @@ export class HomePage extends React.Component {
     ];
     this.frontEndTeamBlock = new DataBlock(frontEndTeam);
     this.backEndTeamBlock = new DataBlock(backEndTeam);
+    this._subscriptions = [];
   }
 
   componentDidMount() {
-    // TODO: sottoscriversi ai block per avere il report finale
+    this._subscriptions.push(
+      this.frontEndTeamBlock.total.subscribe((totalF) => {
+        this.setState(() => ({ totalF }));
+      })
+    );
+
+    this._subscriptions.push(
+      this.backEndTeamBlock.total.subscribe((totalB) => {
+        this.setState(() => ({ totalB }));
+      })
+    );
+  }
+
+  componentWillUnmount() {
+    forEach(this._subscriptions, (subscription) => {
+      subscription.unsubscribe();
+    })
   }
 
   render() {
@@ -36,6 +59,9 @@ export class HomePage extends React.Component {
         <div className="sprintPlanning">
           <HoursPlanning title={'Front-end'} dataBlock={this.frontEndTeamBlock}/>
           <HoursPlanning title={'Back-end'} dataBlock={this.backEndTeamBlock} />
+          <div className="recap">
+            Totale: {parseInt(this.state.totalF) + parseInt(this.state.totalB)} h
+          </div>
         </div>
 
       </div>

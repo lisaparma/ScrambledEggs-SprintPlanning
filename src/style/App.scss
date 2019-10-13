@@ -18,10 +18,18 @@ html, body, #root {
     margin: 2em auto;
     width: fit-content;
 
+    display: flex;
+    flex-direction: row;
+
     text-align: center;
 
     h1, h2 {
       margin: 0;
+    }
+
+    img {
+      margin: 0 1em;
+      width: 100px;
     }
   }
 
@@ -117,6 +125,19 @@ html, body, #root {
 
     .hoursPlanning:hover {
       box-shadow: 0 1px 10px $blue4;
+    }
+
+    .recap {
+      margin: 1em;
+      border-radius: 5px;
+      padding: 1em;
+      height: fit-content;
+
+      background-color: #ffffff;
+      box-shadow: 0 1px 10px #999999;
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
     }
   }
 

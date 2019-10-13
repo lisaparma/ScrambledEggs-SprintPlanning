@@ -43,6 +43,12 @@ export class HoursPlanning extends React.Component {
     );
   }
 
+  componentWillUnmount() {
+    forEach(this._subscriptions, (subscription) => {
+      subscription.unsubscribe();
+    })
+  }
+
   _onChangeEmergency = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value && value <= 100) {
@@ -89,7 +95,7 @@ export class HoursPlanning extends React.Component {
           </div>
         </div>
         <div className="total">
-          <p>Total: {parseInt(this.state.total)}</p>
+          <p>Totale: {parseInt(this.state.total)}</p>
         </div>
       </div>
     )
