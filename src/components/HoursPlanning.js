@@ -19,7 +19,7 @@ export class HoursPlanning extends React.Component {
     super(props);
     this._subscriptions = [];
     this.state = {
-      team: [],
+      team: {},
       total: 0,
       emergency: 0
     }
@@ -59,15 +59,30 @@ export class HoursPlanning extends React.Component {
   render() {
 
     const table = [];
-    forEach(this.state.team, (mate) => {
+    forEach(this.state.team, (mate, key) => {
       table.push(
         <TeamMate
-          key={mate.name}
+          key={key}
+          mateKey={key}
           mate={mate}
           dataBlock={this.props.dataBlock}
         />
       );
     });
+    let key = 0;
+    while (this.state.team[key]) {
+      key++;
+    }
+    table.push(
+      <div className="teammate">
+        <div className="column">
+          <div className="add">
+          <span className="plus">+</span>
+          <input />
+          </div>
+        </div>
+      </div>
+    );
 
     return (
       <div className="hoursPlanning">

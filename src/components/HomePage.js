@@ -16,16 +16,16 @@ export class HomePage extends React.Component {
       totalB: 0
     };
 
-    const frontEndTeam = [
-      { name: 'Cataldo', d: 10, h: 0, efficiency: 70 },
-      { name: 'Lisa', d: 6, h: 0, efficiency: 80 },
-      { name: 'Dennis', d: 10, h: 0, efficiency: 80 }
-    ];
-    const backEndTeam = [
-      { name: 'Davide B.', 'd': 10, 'h': 0, 'efficiency': 70},
-      { name: 'Davide P.', 'd': 10, 'h': 0, 'efficiency': 80},
-      { name: 'Alberto', 'd': 10, 'h': 0, 'efficiency': 30}
-    ];
+    const frontEndTeam = {
+      0: {name: 'Cataldo', d: 10, h: 0, efficiency: 70},
+      1: {name: 'Lisa', d: 6, h: 0, efficiency: 80},
+      2: {name: 'Dennis', d: 10, h: 0, efficiency: 80}
+    };
+    const backEndTeam = {
+      0: { name: 'Davide B.', 'd': 10, 'h': 0, 'efficiency': 70},
+      1: { name: 'Davide P.', 'd': 10, 'h': 0, 'efficiency': 80},
+      2: { name: 'Alberto', 'd': 10, 'h': 0, 'efficiency': 30}
+    };
     this.frontEndTeamBlock = new DataBlock(frontEndTeam);
     this.backEndTeamBlock = new DataBlock(backEndTeam);
     this._subscriptions = [];

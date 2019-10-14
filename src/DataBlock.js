@@ -19,16 +19,19 @@ export class DataBlock {
     this.calculateTotal();
   }
 
-  changeValue(mateName, key, value) {
-    const index = findIndex(this._team, (mate) => {return mate.name === mateName});
-    if (index !== undefined) {
-      const newMate = {
-        ...this._team[index],
-        [key]: value
-      };
-      this._team[index] = newMate;
-      this.team.next(this._team);
-    }
+  addMate(key, mate) {
+    this._team[key] = mate;
+    this.team.next(this._team);
+    this.calculateTotal();
+  }
+
+  changeValue(mateKey, key, value) {
+    const newMate = {
+      ...this._team[mateKey],
+      [key]: value
+    };
+    this._team[mateKey] = newMate;
+    this.team.next(this._team);
     this.calculateTotal();
   }
 
