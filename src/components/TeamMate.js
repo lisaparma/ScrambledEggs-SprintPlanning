@@ -43,7 +43,7 @@ export class TeamMate extends React.Component {
 
     return (
       <div className="teammate">
-        <div className="column">
+        <div className="column name">
           {mate.name}
         </div>
 

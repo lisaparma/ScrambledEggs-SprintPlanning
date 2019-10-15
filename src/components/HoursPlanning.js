@@ -21,7 +21,8 @@ export class HoursPlanning extends React.Component {
     this.state = {
       team: {},
       total: 0,
-      emergency: 0
+      emergency: 0,
+      editMode: false
     }
   }
 
@@ -56,6 +57,10 @@ export class HoursPlanning extends React.Component {
     }
   };
 
+  _editMode = () => {
+    this.setState((prevState) => ({ editMode: !prevState.editMode}))
+  };
+
   render() {
 
     const table = [];
@@ -73,22 +78,30 @@ export class HoursPlanning extends React.Component {
     while (this.state.team[key]) {
       key++;
     }
-    table.push(
-      <div className="teammate">
-        <div className="column">
-          <div className="add">
-          <span className="plus">+</span>
-          <input />
+    if (this.state.editMode) {
+      table.push(
+        <div className="teammate">
+          <div className="column name">
+            <div className="add">
+              <span className="plus">+</span>
+              <input />
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
 
     return (
       <div className="hoursPlanning">
-        <h3>{this.props.title}</h3>
+        <div className="title-end">
+          <h3>{this.props.title}</h3>
+          <i
+            className="fas fa-pencil-alt icon"
+            onClick={this._editMode}
+          />
+        </div>
         <div className="tableHeader">
-          <span className="column">Nome</span>
+          <span className="column name">Nome</span>
           <span className="column">Ore lavorative</span>
           <span className="column">Efficienza</span>
           <span className="column">Emergenza</span>

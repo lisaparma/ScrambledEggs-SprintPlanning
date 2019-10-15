@@ -1,5 +1,8 @@
 @import "variables";
 
+@import "../icons/fontawesome.scss";
+@import "../icons/solid.scss";
+
 * {
   font-family: 'Roboto', sans-serif;
   color: $black;
@@ -65,18 +68,33 @@ html, body, #root {
     .hoursPlanning {
       margin: 1em;
       border-radius: 5px;
-      padding: 1em;
+      padding: 6px 0;
       height: fit-content;
 
       background-color: #ffffff;
       box-shadow: 0 1px 10px #999999;
 
-      h3 {
-
-        margin: 0 0 1em 0;
+      .title-end {
+        margin: 1em;
         border-bottom: solid 3px $blue3;
         padding-bottom: 5px;
-        color: $blue3;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        h3 {
+          margin: 0;
+          color: $blue3;
+        }
+        .icon {
+          padding: 0 5px;
+          color: $blue3;
+          font-size: 20px;
+          cursor: pointer;
+
+          &:hover {
+            color: $orange1;
+          }
+        }
       }
 
       .tableHeader {
@@ -84,6 +102,10 @@ html, body, #root {
           text-align: center;
           font-size: 14px;
           font-weight: bold;
+
+          &.name {
+            padding-left: 50px;
+          }
         }
       }
 
@@ -92,11 +114,13 @@ html, body, #root {
         flex-direction: row;
         .team {
           .teammate {
-
+            position: relative;
             .add {
               display: flex;
               flex-direction: row;
               .plus {
+                position:absolute;
+                left: 15px;
                 width: 20px;
                 height: 20px;
                 border-radius: 20px;
@@ -119,6 +143,20 @@ html, body, #root {
             }
             .column {
               border-left: solid 1px #999999 ;
+              &.name {
+                position: relative;
+                padding-left: 45px;
+                .editMode {
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 20px;
+                  background-color: red;
+                  display: flex;
+                  justify-content: center;
+                  box-shadow: 0 1px 5px #999999;
+                  cursor: pointer;
+                }
+              }
             }
             .column:first-child {
               border-left: 0;
