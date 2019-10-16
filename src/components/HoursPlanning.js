@@ -22,7 +22,8 @@ export class HoursPlanning extends React.Component {
       team: {},
       total: 0,
       emergency: 0,
-      editMode: false
+      editMode: false,
+      inputName: ''
     }
   }
 
@@ -61,6 +62,19 @@ export class HoursPlanning extends React.Component {
     this.setState((prevState) => ({ editMode: !prevState.editMode}))
   };
 
+  _onChangeInput = (ev) => {
+    ev.persist();
+    this.setState(() => ({ inputName: ev.target.value }));
+  };
+
+  _onPlusClick = () => {
+    let key = 0;
+    while (this.state.team[key]) {
+      key++;
+    }
+    this.props.dataBlock.addMate(key, { name: this.state.inputName, d: 0, h: 0, efficiency: 100 })
+  };
+
   render() {
 
     const table = [];
@@ -83,8 +97,12 @@ export class HoursPlanning extends React.Component {
         <div className="teammate">
           <div className="column name">
             <div className="add">
-              <span className="plus">+</span>
-              <input />
+              <span className="plus" onClick={this._onPlusClick}>+</span>
+              <input
+                type={'text'}
+                value={this.state.inputName}
+                onChange={this._onChangeInput}
+              />
             </div>
           </div>
         </div>
