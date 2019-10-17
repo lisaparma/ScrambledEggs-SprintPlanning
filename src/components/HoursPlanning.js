@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {forEach} from 'lodash'
+import { forEach, max, keys } from 'lodash'
 
 import "../style/App.scss";
 import {TeamMate} from "./TeamMate";
@@ -14,23 +14,26 @@ export class HoursPlanning extends React.Component {
   };
 
   _subscriptions;
+  newKey;
 
   constructor(props) {
     super(props);
-    this._subscriptions = [];
     this.state = {
       team: {},
       total: 0,
       emergency: 0,
       editMode: false,
       inputName: ''
-    }
+    };
+    this._subscriptions = [];
+    this.newKey = 0;
   }
 
   componentDidMount() {
     this._subscriptions.push(
       this.props.dataBlock.team.subscribe((team) => {
         this.setState(() => ({ team }));
+        this.newKey = this.calcNewKey(team);
       })
     );
     this._subscriptions.push(
@@ -50,6 +53,10 @@ export class HoursPlanning extends React.Component {
       subscription.unsubscribe();
     })
   }
+
+  calcNewKey = (team) => {
+    return (max(keys(team))+1);
+  };
 
   _onChangeEmergency = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
@@ -74,19 +81,15 @@ export class HoursPlanning extends React.Component {
   };
 
   _onPlusClick = () => {
-    let key = 0;
-    while (this.state.team[key]) {
-      key++;
-    }
-    this.props.dataBlock.addMate(key, { name: this.state.inputName, d: 0, h: 0, efficiency: 100 })
+    this.props.dataBlock.addMate(this.newKey, { name: this.state.inputName, d: 0, h: 0, efficiency: 100 });
     this.setState(() => ({ inputName: '' }));
   };
 
   render() {
-    const { editMode } = this.state;
+    const { team, editMode, inputName, emergency, total } = this.state;
 
     const table = [];
-    forEach(this.state.team, (mate, key) => {
+    forEach(team, (mate, key) => {
       table.push(
         <TeamMate
           key={key}
@@ -97,27 +100,6 @@ export class HoursPlanning extends React.Component {
         />
       );
     });
-    let key = 0;
-    while (this.state.team[key]) {
-      key++;
-    }
-    if (this.state.editMode) {
-      table.push(
-        <div className="teammate" key={key}>
-          <div className="column name">
-            <div className="add">
-              <i className="fas fa-plus-circle plus" onClick={this._onPlusClick} />
-              <input
-                type={'text'}
-                value={this.state.inputName}
-                onChange={this._onChangeInput}
-                onKeyDown={this._onKeyDown}
-              />
-            </div>
-          </div>
-        </div>
-      );
-    }
 
     return (
       <div className="hoursPlanning">
@@ -142,7 +124,7 @@ export class HoursPlanning extends React.Component {
             <span>-</span>
             <input
               type="number"
-              value={this.state.emergency}
+              value={emergency}
               min={0}
               max={100}
               onChange={this._onChangeEmergency}
@@ -150,8 +132,19 @@ export class HoursPlanning extends React.Component {
             <span>%</span>
           </div>
         </div>
+        {editMode &&
+          <div className="add">
+            <i className="fas fa-plus-circle plus" onClick={this._onPlusClick} />
+            <input
+              type={'text'}
+              value={inputName}
+              onChange={this._onChangeInput}
+              onKeyDown={this._onKeyDown}
+            />
+          </div>
+          }
         <div className="total">
-          <p>Totale: {parseInt(this.state.total)}</p>
+          <p>Totale: {parseInt(total)}</p>
         </div>
       </div>
     )

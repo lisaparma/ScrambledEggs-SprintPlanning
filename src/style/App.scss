@@ -16,14 +16,11 @@ html, body, #root {
 }
 
 .page {
-
   .heading {
     margin: 2em auto;
     width: fit-content;
-
     display: flex;
     flex-direction: row;
-
     text-align: center;
 
     h1, h2 {
@@ -37,7 +34,7 @@ html, body, #root {
     }
   }
 
-  .sprintPlanning{
+  .sprintPlanning {
     margin: auto;
     width: fit-content;
 
@@ -57,20 +54,11 @@ html, body, #root {
       -moz-appearance: textfield;
     }
 
-    .column {
-      display: inline-block;
-      width: 120px;
-      padding: 10px;
-      height: 20px;
-      text-align-last: center;
-    }
-
     .hoursPlanning {
       margin: 1em;
       border-radius: 5px;
       padding: 6px 0;
       height: fit-content;
-
       background-color: #ffffff;
       box-shadow: 0 1px 10px #999999;
 
@@ -90,11 +78,22 @@ html, body, #root {
           color: $blue3;
           font-size: 20px;
           cursor: pointer;
-
           &:hover {
             color: $orange1;
           }
         }
+      }
+
+      .column {
+        display: inline-block;
+        flex-direction: row;
+        width: 120px;
+        padding: 10px;
+        height: 20px;
+        text-align-last: center;
+        overflow: hidden;
+        vertical-align: bottom; // To avoid overflow: hidden space
+        text-overflow: ellipsis;
       }
 
       .tableHeader {
@@ -102,33 +101,19 @@ html, body, #root {
           text-align: center;
           font-size: 14px;
           font-weight: bold;
-
-          &.name {
-            padding-left: 50px;
+          &:first-child {
+            padding-left: 45px;
           }
         }
       }
 
       .tableContent {
+        height: fit-content;
         display: flex;
         flex-direction: row;
         .team {
           .teammate {
             position: relative;
-            .add {
-              display: flex;
-              flex-direction: row;
-              .plus {
-                position:absolute;
-                left: 15px;
-                color: #00c700;
-                font-size: 20px;
-                cursor: pointer;
-              }
-              input {
-                flex: 1;
-              }
-            }
 
             .minus {
               position:absolute;
@@ -140,7 +125,6 @@ html, body, #root {
               font-size: 20px;
               align-items: flex-end;
               cursor: pointer;
-
               .icon {
                 color: red;
               }
@@ -148,9 +132,11 @@ html, body, #root {
 
             .column {
               border-left: solid 1px #999999 ;
-              &.name {
-                position: relative;
+              &:first-child {
+                border-left: 0;
                 padding-left: 45px;
+                position: relative;
+                text-align-last: left;
                 .editMode {
                   width: 20px;
                   height: 20px;
@@ -163,37 +149,52 @@ html, body, #root {
                 }
               }
             }
-            .column:first-child {
-              border-left: 0;
-              text-align-last: left;
+
+            &:hover {
+              background-color: $blue1;
             }
           }
-
-          .teammate:hover {
-            background-color: $blue1;
-          }
         }
+
         .emergency {
-          display: flex;
           border-left: solid 1px #999999;
           padding: 0;
-          height: 120px;
+          height: auto;
+          display: flex;
           align-items: center;
           justify-content: center;
         }
       }
+
+      .add {
+        padding: 10px;
+        padding-left: 45px;
+        position: relative;
+        .plus {
+          position:absolute;
+          left: 15px;
+          color: #00c700;
+          font-size: 20px;
+          cursor: pointer;
+        }
+        input {
+          margin: 0;
+          width: 100px;
+          flex: 1;
+        }
+      }
+
       .total {
         width: fit-content;
         margin: auto;
-
         p {
           font-weight: bold;
         }
       }
-    }
 
-    .hoursPlanning:hover {
-      box-shadow: 0 1px 10px $blue4;
+      &:hover {
+        box-shadow: 0 1px 10px $blue4;
+      }
     }
 
     .recap {
@@ -202,7 +203,7 @@ html, body, #root {
       padding: 1em;
       height: fit-content;
 
-      background-color: #ffffff;
+      background-color: $white;
       box-shadow: 0 1px 10px #999999;
       text-align: center;
       font-weight: bold;
