@@ -45,12 +45,9 @@ export class TeamMate extends React.Component {
       <div className="teammate">
         <div className="column name">
           {edit &&
-          <span
-            className="minus"
-            onClick={this._onMinusClick}
-          >
-            -
-          </span>
+            <div className="minus" >
+              <i className="fas fa-times icon" onClick={this._onMinusClick}/>
+            </div>
           }
           {mate.name}
         </div>

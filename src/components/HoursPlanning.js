@@ -106,12 +106,7 @@ export class HoursPlanning extends React.Component {
         <div className="teammate" key={key}>
           <div className="column name">
             <div className="add">
-              <span
-                className="plus"
-                onClick={this._onPlusClick}
-              >
-                +
-              </span>
+              <i className="fas fa-plus-circle plus" onClick={this._onPlusClick} />
               <input
                 type={'text'}
                 value={this.state.inputName}

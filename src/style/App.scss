@@ -121,21 +121,9 @@ html, body, #root {
               .plus {
                 position:absolute;
                 left: 15px;
-                width: 20px;
-                height: 20px;
-                border-radius: 20px;
-                background-color: #00c700;
-                display: flex;
-                justify-content: center;
-                box-shadow: 0 1px 5px #999999;
-                color: $white;
+                color: #00c700;
                 font-size: 20px;
-                align-items: flex-end;
                 cursor: pointer;
-
-                &:hover {
-                  box-shadow: 0 1px 10px $blue5;
-                }
               }
               input {
                 flex: 1;
@@ -147,20 +135,17 @@ html, body, #root {
               left: 15px;
               width: 20px;
               height: 20px;
-              border-radius: 20px;
-              background-color: red;
               display: flex;
               justify-content: center;
-              box-shadow: 0 1px 5px #999999;
-              color: $white;
               font-size: 20px;
               align-items: flex-end;
               cursor: pointer;
 
-              &:hover {
-                box-shadow: 0 1px 10px $blue5;
+              .icon {
+                color: red;
               }
             }
+
             .column {
               border-left: solid 1px #999999 ;
               &.name {

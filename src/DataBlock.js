@@ -20,9 +20,11 @@ export class DataBlock {
   }
 
   addMate(key, mate) {
-    this._team[key] = mate;
-    this.team.next(this._team);
-    this.calculateTotal();
+    if (mate.name !== '') {
+      this._team[key] = mate;
+      this.team.next(this._team);
+      this.calculateTotal();
+    }
   }
 
   deleteMate(key) {
