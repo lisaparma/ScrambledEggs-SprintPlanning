@@ -1,17 +1,18 @@
 {
   "files": {
-    "main.css": "/NewBaconMonster-SprintPlanning/static/css/main.3eae3b44.chunk.css",
-    "main.js": "/NewBaconMonster-SprintPlanning/static/js/main.41ed4223.chunk.js",
-    "main.js.map": "/NewBaconMonster-SprintPlanning/static/js/main.41ed4223.chunk.js.map",
+    "main.css": "/NewBaconMonster-SprintPlanning/static/css/main.ef1e7927.chunk.css",
+    "main.js": "/NewBaconMonster-SprintPlanning/static/js/main.e11c626c.chunk.js",
+    "main.js.map": "/NewBaconMonster-SprintPlanning/static/js/main.e11c626c.chunk.js.map",
     "runtime~main.js": "/NewBaconMonster-SprintPlanning/static/js/runtime~main.ec90d83c.js",
     "runtime~main.js.map": "/NewBaconMonster-SprintPlanning/static/js/runtime~main.ec90d83c.js.map",
-    "static/js/2.5674e21b.chunk.js": "/NewBaconMonster-SprintPlanning/static/js/2.5674e21b.chunk.js",
-    "static/js/2.5674e21b.chunk.js.map": "/NewBaconMonster-SprintPlanning/static/js/2.5674e21b.chunk.js.map",
+    "static/js/2.35137403.chunk.js": "/NewBaconMonster-SprintPlanning/static/js/2.35137403.chunk.js",
+    "static/js/2.35137403.chunk.js.map": "/NewBaconMonster-SprintPlanning/static/js/2.35137403.chunk.js.map",
     "index.html": "/NewBaconMonster-SprintPlanning/index.html",
-    "precache-manifest.151950484170b9122012212b72420f15.js": "/NewBaconMonster-SprintPlanning/precache-manifest.151950484170b9122012212b72420f15.js",
+    "precache-manifest.d67ca094f9d25685619702cfe66a74e7.js": "/NewBaconMonster-SprintPlanning/precache-manifest.d67ca094f9d25685619702cfe66a74e7.js",
     "service-worker.js": "/NewBaconMonster-SprintPlanning/service-worker.js",
-    "static/css/main.3eae3b44.chunk.css.map": "/NewBaconMonster-SprintPlanning/static/css/main.3eae3b44.chunk.css.map",
+    "static/css/main.ef1e7927.chunk.css.map": "/NewBaconMonster-SprintPlanning/static/css/main.ef1e7927.chunk.css.map",
     "static/media/bacon1.png": "/NewBaconMonster-SprintPlanning/static/media/bacon1.cd220d7d.png",
-    "static/media/bacon2.png": "/NewBaconMonster-SprintPlanning/static/media/bacon2.0a593846.png"
+    "static/media/bacon2.png": "/NewBaconMonster-SprintPlanning/static/media/bacon2.0a593846.png",
+    "static/media/App.scss": "/NewBaconMonster-SprintPlanning/static/media/fa-solid-900.c2801fb4.svg"
   }
 }
