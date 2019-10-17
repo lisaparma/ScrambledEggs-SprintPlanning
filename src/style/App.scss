@@ -141,6 +141,26 @@ html, body, #root {
                 flex: 1;
               }
             }
+
+            .minus {
+              position:absolute;
+              left: 15px;
+              width: 20px;
+              height: 20px;
+              border-radius: 20px;
+              background-color: red;
+              display: flex;
+              justify-content: center;
+              box-shadow: 0 1px 5px #999999;
+              color: $white;
+              font-size: 20px;
+              align-items: flex-end;
+              cursor: pointer;
+
+              &:hover {
+                box-shadow: 0 1px 10px $blue5;
+              }
+            }
             .column {
               border-left: solid 1px #999999 ;
               &.name {

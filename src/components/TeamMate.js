@@ -1,5 +1,4 @@
 import React from 'react';
-import {forEach} from 'lodash'
 
 import "../style/App.scss";
 import PropTypes from "prop-types";
@@ -8,14 +7,11 @@ import {DataBlock} from "../DataBlock";
 export class TeamMate extends React.Component {
 
   static propTypes = {
-    mateKey: PropTypes.number,
+    mateKey: PropTypes.string,
     mate: PropTypes.object,
-    dataBlock: PropTypes.instanceOf(DataBlock)
+    dataBlock: PropTypes.instanceOf(DataBlock),
+    edit: PropTypes.bool
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   _onChangeD = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
@@ -38,12 +34,24 @@ export class TeamMate extends React.Component {
     }
   };
 
+  _onMinusClick = () => {
+    this.props.dataBlock.deleteMate(this.props.mateKey);
+  };
+
   render() {
-    const {mate} = this.props;
+    const {mate, edit} = this.props;
 
     return (
       <div className="teammate">
         <div className="column name">
+          {edit &&
+          <span
+            className="minus"
+            onClick={this._onMinusClick}
+          >
+            -
+          </span>
+          }
           {mate.name}
         </div>
 

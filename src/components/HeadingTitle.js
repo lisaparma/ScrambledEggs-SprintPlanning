@@ -8,12 +8,12 @@ import bacon2 from'../bacon2.png';
 export function HeadingTitle() {
   return (
     <div className="heading">
-      <img src={bacon1} />
+      <img src={bacon1} alt={'bacon'} />
       <div>
         <h1>New Bacon Monster</h1>
         <h2>Sprint Planning</h2>
       </div>
-      <img src={bacon2} />
+      <img src={bacon2} alt={'bacon'} />
     </div>
   )
 }

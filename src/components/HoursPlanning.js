@@ -67,15 +67,23 @@ export class HoursPlanning extends React.Component {
     this.setState(() => ({ inputName: ev.target.value }));
   };
 
+  _onKeyDown = (ev) => {
+    if (ev.key === "Enter") {
+      this._onPlusClick();
+    }
+  };
+
   _onPlusClick = () => {
     let key = 0;
     while (this.state.team[key]) {
       key++;
     }
     this.props.dataBlock.addMate(key, { name: this.state.inputName, d: 0, h: 0, efficiency: 100 })
+    this.setState(() => ({ inputName: '' }));
   };
 
   render() {
+    const { editMode } = this.state;
 
     const table = [];
     forEach(this.state.team, (mate, key) => {
@@ -85,6 +93,7 @@ export class HoursPlanning extends React.Component {
           mateKey={key}
           mate={mate}
           dataBlock={this.props.dataBlock}
+          edit={editMode}
         />
       );
     });
@@ -94,14 +103,20 @@ export class HoursPlanning extends React.Component {
     }
     if (this.state.editMode) {
       table.push(
-        <div className="teammate">
+        <div className="teammate" key={key}>
           <div className="column name">
             <div className="add">
-              <span className="plus" onClick={this._onPlusClick}>+</span>
+              <span
+                className="plus"
+                onClick={this._onPlusClick}
+              >
+                +
+              </span>
               <input
                 type={'text'}
                 value={this.state.inputName}
                 onChange={this._onChangeInput}
+                onKeyDown={this._onKeyDown}
               />
             </div>
           </div>
