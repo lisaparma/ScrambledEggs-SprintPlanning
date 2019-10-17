@@ -1,5 +1,4 @@
 import React from 'react';
-import {forEach} from 'lodash'
 
 import "../style/App.scss";
 import PropTypes from "prop-types";
@@ -8,42 +7,48 @@ import {DataBlock} from "../DataBlock";
 export class TeamMate extends React.Component {
 
   static propTypes = {
+    mateKey: PropTypes.string,
     mate: PropTypes.object,
-    dataBlock: PropTypes.instanceOf(DataBlock)
+    dataBlock: PropTypes.instanceOf(DataBlock),
+    edit: PropTypes.bool
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   _onChangeD = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value) {
-      this.props.dataBlock.changeValue(this.props.mate.name, 'd', value);
+      this.props.dataBlock.changeValue(this.props.mateKey, 'd', value);
     }
   };
 
   _onChangeH = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value) {
-      this.props.dataBlock.changeValue(this.props.mate.name, 'h', value);
+      this.props.dataBlock.changeValue(this.props.mateKey, 'h', value);
     }
   };
 
   _onChangeEff = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value && value <= 100) {
-      this.props.dataBlock.changeValue(this.props.mate.name, 'efficiency', value);
+      this.props.dataBlock.changeValue(this.props.mateKey, 'efficiency', value);
     }
   };
 
+  _onMinusClick = () => {
+    this.props.dataBlock.deleteMate(this.props.mateKey);
+  };
+
   render() {
-    const {mate} = this.props;
-    const total = ((mate.d*8) + mate.h)/100 * mate.efficiency;
+    const {mate, edit} = this.props;
 
     return (
       <div className="teammate">
         <div className="column">
+          {edit &&
+            <div className="minus" >
+              <i className="fas fa-times icon" onClick={this._onMinusClick}/>
+            </div>
+          }
           {mate.name}
         </div>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {forEach} from 'lodash'
+import { forEach, max, keys } from 'lodash'
 
 import "../style/App.scss";
 import {TeamMate} from "./TeamMate";
@@ -14,21 +14,26 @@ export class HoursPlanning extends React.Component {
   };
 
   _subscriptions;
+  newKey;
 
   constructor(props) {
     super(props);
-    this._subscriptions = [];
     this.state = {
-      team: [],
+      team: {},
       total: 0,
-      emergency: 0
-    }
+      emergency: 0,
+      editMode: false,
+      inputName: ''
+    };
+    this._subscriptions = [];
+    this.newKey = 0;
   }
 
   componentDidMount() {
     this._subscriptions.push(
       this.props.dataBlock.team.subscribe((team) => {
         this.setState(() => ({ team }));
+        this.newKey = this.calcNewKey(team);
       })
     );
     this._subscriptions.push(
@@ -49,6 +54,10 @@ export class HoursPlanning extends React.Component {
     })
   }
 
+  calcNewKey = (team) => {
+    return (max(keys(team))+1);
+  };
+
   _onChangeEmergency = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value && value <= 100) {
@@ -56,24 +65,53 @@ export class HoursPlanning extends React.Component {
     }
   };
 
+  _editMode = () => {
+    this.setState((prevState) => ({ editMode: !prevState.editMode}))
+  };
+
+  _onChangeInput = (ev) => {
+    ev.persist();
+    this.setState(() => ({ inputName: ev.target.value }));
+  };
+
+  _onKeyDown = (ev) => {
+    if (ev.key === "Enter") {
+      this._onPlusClick();
+    }
+  };
+
+  _onPlusClick = () => {
+    this.props.dataBlock.addMate(this.newKey, { name: this.state.inputName, d: 0, h: 0, efficiency: 100 });
+    this.setState(() => ({ inputName: '' }));
+  };
+
   render() {
+    const { team, editMode, inputName, emergency, total } = this.state;
 
     const table = [];
-    forEach(this.state.team, (mate) => {
+    forEach(team, (mate, key) => {
       table.push(
         <TeamMate
-          key={mate.name}
+          key={key}
+          mateKey={key}
           mate={mate}
           dataBlock={this.props.dataBlock}
+          edit={editMode}
         />
       );
     });
 
     return (
       <div className="hoursPlanning">
-        <h3>{this.props.title}</h3>
+        <div className="title-end">
+          <h3>{this.props.title}</h3>
+          <i
+            className="fas fa-pencil-alt icon"
+            onClick={this._editMode}
+          />
+        </div>
         <div className="tableHeader">
-          <span className="column">Nome</span>
+          <span className="column name">Nome</span>
           <span className="column">Ore lavorative</span>
           <span className="column">Efficienza</span>
           <span className="column">Emergenza</span>
@@ -86,7 +124,7 @@ export class HoursPlanning extends React.Component {
             <span>-</span>
             <input
               type="number"
-              value={this.state.emergency}
+              value={emergency}
               min={0}
               max={100}
               onChange={this._onChangeEmergency}
@@ -94,8 +132,19 @@ export class HoursPlanning extends React.Component {
             <span>%</span>
           </div>
         </div>
+        {editMode &&
+          <div className="add">
+            <i className="fas fa-plus-circle plus" onClick={this._onPlusClick} />
+            <input
+              type={'text'}
+              value={inputName}
+              onChange={this._onChangeInput}
+              onKeyDown={this._onKeyDown}
+            />
+          </div>
+          }
         <div className="total">
-          <p>Totale: {parseInt(this.state.total)}</p>
+          <p>Totale: {parseInt(total)}</p>
         </div>
       </div>
     )

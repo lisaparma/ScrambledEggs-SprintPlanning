@@ -1,5 +1,5 @@
 
-import {concat, findIndex, forEach, remove} from 'lodash';
+import { forEach } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 
 export class DataBlock {
@@ -19,16 +19,27 @@ export class DataBlock {
     this.calculateTotal();
   }
 
-  changeValue(mateName, key, value) {
-    const index = findIndex(this._team, (mate) => {return mate.name === mateName});
-    if (index !== undefined) {
-      const newMate = {
-        ...this._team[index],
-        [key]: value
-      };
-      this._team[index] = newMate;
+  addMate(key, mate) {
+    if (mate.name !== '') {
+      this._team[key] = mate;
       this.team.next(this._team);
+      this.calculateTotal();
     }
+  }
+
+  deleteMate(key) {
+    delete this._team[key];
+    this.team.next(this._team);
+    this.calculateTotal();
+  }
+
+  changeValue(mateKey, key, value) {
+    const newMate = {
+      ...this._team[mateKey],
+      [key]: value
+    };
+    this._team[mateKey] = newMate;
+    this.team.next(this._team);
     this.calculateTotal();
   }
 
