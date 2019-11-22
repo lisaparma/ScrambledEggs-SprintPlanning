@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/NewBaconMonster-SprintPlanning/precache-manifest.d67ca094f9d25685619702cfe66a74e7.js"
+  "/NewBaconMonster-SprintPlanning/precache-manifest.72ce2b96be1c431ca71f632d579ac594.js"
 );
 
 self.addEventListener('message', (event) => {
