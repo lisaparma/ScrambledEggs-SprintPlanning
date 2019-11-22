@@ -4,8 +4,10 @@ import {HeadingTitle} from "./HeadingTitle";
 import {HoursPlanning} from "./HoursPlanning";
 
 import "../style/App.scss";
-import {DataBlock} from "../DataBlock";
+import {DataBlock} from "../data/DataBlock";
 import {forEach} from "lodash";
+
+import * as data from "../data/teamData.json";
 
 export class HomePage extends React.Component {
 
@@ -16,16 +18,8 @@ export class HomePage extends React.Component {
       totalB: 0
     };
 
-    const frontEndTeam = {
-      0: {name: 'Cataldo', d: 10, h: 0, efficiency: 70},
-      1: {name: 'Lisa', d: 6, h: 0, efficiency: 80},
-      2: {name: 'Dennis', d: 10, h: 0, efficiency: 80}
-    };
-    const backEndTeam = {
-      0: { name: 'Davide B.', 'd': 10, 'h': 0, 'efficiency': 70},
-      1: { name: 'Davide P.', 'd': 10, 'h': 0, 'efficiency': 80},
-      2: { name: 'Alberto', 'd': 10, 'h': 0, 'efficiency': 30}
-    };
+    const frontEndTeam = data.frontEndTeam;
+    const backEndTeam = data.backEndTeam;
     this.frontEndTeamBlock = new DataBlock(frontEndTeam);
     this.backEndTeamBlock = new DataBlock(backEndTeam);
     this._subscriptions = [];
@@ -54,7 +48,7 @@ export class HomePage extends React.Component {
   render() {
     return (
       <div className="page">
-        <HeadingTitle/>
+        <HeadingTitle teamName={data.teamName}/>
 
         <div className="sprintPlanning">
           <HoursPlanning title={'Front-end'} dataBlock={this.frontEndTeamBlock}/>

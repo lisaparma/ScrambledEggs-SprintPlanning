@@ -2,7 +2,7 @@ import React from 'react';
 
 import "../style/App.scss";
 import PropTypes from "prop-types";
-import {DataBlock} from "../DataBlock";
+import {DataBlock} from "../data/DataBlock";
 
 export class TeamMate extends React.Component {
 

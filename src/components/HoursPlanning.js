@@ -4,7 +4,7 @@ import { forEach, max, keys } from 'lodash'
 
 import "../style/App.scss";
 import {TeamMate} from "./TeamMate";
-import {DataBlock} from "../DataBlock";
+import {DataBlock} from "../data/DataBlock";
 
 export class HoursPlanning extends React.Component {
 
