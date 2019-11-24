@@ -15,14 +15,17 @@ export class HomePage extends React.Component {
     super(props);
     this.state = {
       totalF: 0,
-      totalB: 0
+      totalB: 0,
+      fileJSON: null
     };
 
     const frontEndTeam = data.frontEndTeam;
     const backEndTeam = data.backEndTeam;
     this.frontEndTeamBlock = new DataBlock(frontEndTeam);
     this.backEndTeamBlock = new DataBlock(backEndTeam);
+
     this._subscriptions = [];
+    this.fileReader = new FileReader();
   }
 
   componentDidMount() {
@@ -37,6 +40,32 @@ export class HomePage extends React.Component {
         this.setState(() => ({ totalB }));
       })
     );
+
+    this.fileReader.onload = (event) => {
+      try {
+        let json = JSON.parse(event.target.result);
+        this.setState(() => ({fileJSON: json}));
+      }
+      catch (e) {
+        console.error(e);
+      }
+    };
+
+    this.fileReader.onerror = (error) => {
+      console.error(error);
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState, nextContext) {
+    if (this.state.fileJSON !== nextState.fileJSON) {
+      if (nextState.fileJSON.hasOwnProperty("frontEndTeam")) {
+        this.frontEndTeamBlock.changeTeam(nextState.fileJSON.frontEndTeam);
+      }
+
+      if (nextState.fileJSON.hasOwnProperty("backEndTeam")) {
+        this.backEndTeamBlock.changeTeam(nextState.fileJSON.backEndTeam);
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -45,10 +74,31 @@ export class HomePage extends React.Component {
     })
   }
 
+  _importClick = () => {
+    this.ref.click();
+  };
+
+  _onChangeFile(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    let file = event.target.files[0];
+    this.fileReader.readAsText(file);
+  }
+
   render() {
     return (
       <div className="page">
         <HeadingTitle teamName={data.teamName}/>
+
+        <div onClick={this._importClick}> import </div>
+        <input
+          type="file"
+          accept=".json"
+          ref={(ref) => this.ref = ref }
+          style={{display: "none"}}
+          onChange={this._onChangeFile.bind(this)}
+        />
 
         <div className="sprintPlanning">
           <HoursPlanning title={'Front-end'} dataBlock={this.frontEndTeamBlock}/>
