@@ -15,14 +15,17 @@ export class HomePage extends React.Component {
     super(props);
     this.state = {
       totalF: 0,
-      totalB: 0
+      totalB: 0,
+      fileJSON: null
     };
 
     const frontEndTeam = data.frontEndTeam;
     const backEndTeam = data.backEndTeam;
     this.frontEndTeamBlock = new DataBlock(frontEndTeam);
     this.backEndTeamBlock = new DataBlock(backEndTeam);
+
     this._subscriptions = [];
+    this.fileReader = new FileReader();
   }
 
   componentDidMount() {
@@ -37,6 +40,38 @@ export class HomePage extends React.Component {
         this.setState(() => ({ totalB }));
       })
     );
+
+    this.fileReader.onload = (event) => {
+      try {
+        let json = JSON.parse(event.target.result);
+        this.setState(() => ({fileJSON: json}));
+      }
+      catch (e) {
+        console.error(e);
+      }
+    };
+
+    this.fileReader.onerror = (error) => {
+      console.error(error);
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState, nextContext) {
+    if (this.state.fileJSON !== nextState.fileJSON) {
+      if (nextState.fileJSON.hasOwnProperty("frontEndTeam") && nextState.fileJSON.frontEndTeam) {
+        this.frontEndTeamBlock.changeTeam(nextState.fileJSON.frontEndTeam);
+      }
+      else {
+        this.frontEndTeamBlock = undefined;
+      }
+
+      if (nextState.fileJSON.hasOwnProperty("backEndTeam" ) && nextState.fileJSON.backEndTeam) {
+        this.backEndTeamBlock.changeTeam(nextState.fileJSON.backEndTeam);
+      }
+      else {
+        this.backEndTeamBlock = undefined;
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -45,14 +80,43 @@ export class HomePage extends React.Component {
     })
   }
 
+  _importClick = () => {
+    this.ref.click();
+  };
+
+  _onChangeFile(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    let file = event.target.files[0];
+    this.fileReader.readAsText(file);
+  }
+
   render() {
     return (
       <div className="page">
         <HeadingTitle teamName={data.teamName}/>
 
+        <div
+          className="uploadIcon"
+          onClick={this._importClick}>
+          <i className="fas fa-upload icon" onClick={this._onMinusClick}/>
+        </div>
+        <input
+          type="file"
+          accept=".json"
+          ref={(ref) => this.ref = ref }
+          style={{display: "none"}}
+          onChange={this._onChangeFile.bind(this)}
+        />
+
         <div className="sprintPlanning">
-          <HoursPlanning title={'Front-end'} dataBlock={this.frontEndTeamBlock}/>
-          <HoursPlanning title={'Back-end'} dataBlock={this.backEndTeamBlock} />
+          {this.frontEndTeamBlock &&
+            <HoursPlanning title={'Front-end'} dataBlock={this.frontEndTeamBlock}/>
+          }
+          {this.backEndTeamBlock &&
+            <HoursPlanning title={'Back-end'} dataBlock={this.backEndTeamBlock}/>
+          }
           <div className="recap">
             Totale: {parseInt(this.state.totalF) + parseInt(this.state.totalB)} h
           </div>

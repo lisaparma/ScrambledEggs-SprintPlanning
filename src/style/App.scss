@@ -34,6 +34,13 @@ html, body, #root {
     }
   }
 
+  .uploadIcon {
+    text-align: center;
+    :hover {
+      color: $blue3
+    }
+  }
+
   .sprintPlanning {
     margin: auto;
     width: fit-content;

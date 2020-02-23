@@ -19,6 +19,12 @@ export class DataBlock {
     this.calculateTotal();
   }
 
+  changeTeam(newTeam) {
+    this._team = newTeam;
+    this.team.next(this._team);
+    this.calculateTotal();
+  }
+
   addMate(key, mate) {
     if (mate.name !== '') {
       this._team[key] = mate;
