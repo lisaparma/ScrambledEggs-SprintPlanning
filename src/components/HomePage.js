@@ -58,12 +58,18 @@ export class HomePage extends React.Component {
 
   componentWillUpdate(nextProps, nextState, nextContext) {
     if (this.state.fileJSON !== nextState.fileJSON) {
-      if (nextState.fileJSON.hasOwnProperty("frontEndTeam")) {
+      if (nextState.fileJSON.hasOwnProperty("frontEndTeam") && nextState.fileJSON.frontEndTeam) {
         this.frontEndTeamBlock.changeTeam(nextState.fileJSON.frontEndTeam);
       }
+      else {
+        this.frontEndTeamBlock = undefined;
+      }
 
-      if (nextState.fileJSON.hasOwnProperty("backEndTeam")) {
+      if (nextState.fileJSON.hasOwnProperty("backEndTeam" ) && nextState.fileJSON.backEndTeam) {
         this.backEndTeamBlock.changeTeam(nextState.fileJSON.backEndTeam);
+      }
+      else {
+        this.backEndTeamBlock = undefined;
       }
     }
   }
@@ -91,7 +97,11 @@ export class HomePage extends React.Component {
       <div className="page">
         <HeadingTitle teamName={data.teamName}/>
 
-        <div onClick={this._importClick}> import </div>
+        <div
+          className="uploadIcon"
+          onClick={this._importClick}>
+          <i className="fas fa-upload icon" onClick={this._onMinusClick}/>
+        </div>
         <input
           type="file"
           accept=".json"
@@ -101,8 +111,12 @@ export class HomePage extends React.Component {
         />
 
         <div className="sprintPlanning">
-          <HoursPlanning title={'Front-end'} dataBlock={this.frontEndTeamBlock}/>
-          <HoursPlanning title={'Back-end'} dataBlock={this.backEndTeamBlock} />
+          {this.frontEndTeamBlock &&
+            <HoursPlanning title={'Front-end'} dataBlock={this.frontEndTeamBlock}/>
+          }
+          {this.backEndTeamBlock &&
+            <HoursPlanning title={'Back-end'} dataBlock={this.backEndTeamBlock}/>
+          }
           <div className="recap">
             Totale: {parseInt(this.state.totalF) + parseInt(this.state.totalB)} h
           </div>
