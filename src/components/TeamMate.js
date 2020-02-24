@@ -1,6 +1,7 @@
 import React from 'react';
+import AwIcon from 'awicons-react';
 
-import "../style/App.scss";
+import "../style/TeamMate.scss";
 import PropTypes from "prop-types";
 import {DataBlock} from "../data/DataBlock";
 
@@ -45,9 +46,11 @@ export class TeamMate extends React.Component {
       <div className="teammate">
         <div className="column">
           {edit &&
-            <div className="minus" >
-              <i className="fas fa-times icon" onClick={this._onMinusClick}/>
-            </div>
+            <AwIcon
+              iconName="times"
+              className="minus"
+              onClick={this._onMinusClick}
+            />
           }
           {mate.name}
         </div>

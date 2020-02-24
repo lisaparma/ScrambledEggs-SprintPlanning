@@ -1,4 +1,5 @@
 import React from 'react';
+import AwIcon from "awicons-react";
 
 import {HeadingTitle} from "./HeadingTitle";
 import {HoursPlanning} from "./HoursPlanning";
@@ -96,12 +97,11 @@ export class HomePage extends React.Component {
     return (
       <div className="page">
         <HeadingTitle teamName={data.teamName}/>
-
-        <div
+        <AwIcon
+          iconName="upload"
           className="uploadIcon"
-          onClick={this._importClick}>
-          <i className="fas fa-upload icon" onClick={this._onMinusClick}/>
-        </div>
+          onClick={this._importClick}
+        />
         <input
           type="file"
           accept=".json"

@@ -1,0 +1,113 @@
+@import "variables";
+
+.hoursPlanning {
+  margin: 1em;
+  border-radius: 5px;
+  padding: 6px 0;
+  height: fit-content;
+  background-color: $white1;
+  box-shadow: 0 1px 10px $grey;
+
+  .title-end {
+    margin: 1em;
+    border-bottom: solid 3px $blue3;
+    padding-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    h3 {
+      margin: 0;
+      color: $blue3;
+    }
+    .icon {
+      padding: 0 5px;
+      color: $blue3;
+      font-size: 20px;
+      cursor: pointer;
+      :hover {
+        color: $orange1;
+      }
+    }
+  }
+
+  .column {
+    display: inline-block;
+    flex-direction: row;
+    width: 120px;
+    padding: 10px;
+    height: 20px;
+    text-align-last: center;
+    overflow: hidden;
+    vertical-align: bottom; // To avoid overflow: hidden space
+    text-overflow: ellipsis;
+  }
+
+  .tableHeader {
+    .column {
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      &:first-child {
+        padding-left: 45px;
+      }
+    }
+  }
+
+  .tableContent {
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    .team {
+
+    }
+
+    .emergency {
+      border-left: solid 1px $grey;
+      padding: 0;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .add {
+    padding: 10px;
+    padding-left: 45px;
+    position: relative;
+    .plus > i {
+      position:absolute;
+      left: 15px;
+      color: #00c700;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    input {
+      margin: 0;
+      width: 100px;
+      flex: 1;
+    }
+  }
+
+  .total {
+    width: fit-content;
+    margin: auto;
+    p {
+      font-weight: bold;
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 1px 10px $blue4;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .tableHeader {
+    display: none;
+  }
+  .tableContent {
+    display: flex;
+    flex-direction: column !important;
+  }
+}

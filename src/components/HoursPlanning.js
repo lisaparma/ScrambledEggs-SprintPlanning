@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forEach, max, keys } from 'lodash'
+import AwIcon from "awicons-react";
 
-import "../style/App.scss";
+import "../style/HoursPlanning.scss";
+
 import {TeamMate} from "./TeamMate";
 import {DataBlock} from "../data/DataBlock";
 
@@ -105,8 +107,9 @@ export class HoursPlanning extends React.Component {
       <div className="hoursPlanning">
         <div className="title-end">
           <h3>{this.props.title}</h3>
-          <i
-            className="fas fa-pencil-alt icon"
+          <AwIcon
+            iconName="pencil-alt"
+            className="icon"
             onClick={this._editMode}
           />
         </div>
@@ -134,7 +137,11 @@ export class HoursPlanning extends React.Component {
         </div>
         {editMode &&
           <div className="add">
-            <i className="fas fa-plus-circle plus" onClick={this._onPlusClick} />
+            <AwIcon
+              iconName="plus-circle"
+              className="plus"
+              onClick={this._onPlusClick}
+            />
             <input
               type={'text'}
               value={inputName}
