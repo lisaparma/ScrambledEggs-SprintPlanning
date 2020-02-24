@@ -1,43 +1,42 @@
-{
+const inizialStore = {
   "teamName": "Scrambled Eggs",
-  "frontEndTeam": {
-    "0": {
+  "data": Date.now(),
+  "mates": {
+    "cataldo": {
       "name": "Cataldo",
       "d": 10,
       "h": 0,
       "efficiency": 100
     },
-    "1": {
+    "lisa": {
       "name": "Lisa",
       "d": 6,
       "h": 0,
       "efficiency": 100
     },
-    "2": {
+    "dennis": {
       "name": "Dennis",
       "d": 10,
       "h": 0,
       "efficiency": 100
-    }
-  },
-  "backEndTeam": {
-    "0": {
-      "name": "Davide B.",
-      "d": 10,
-      "h": 0,
-      "efficiency": 100
     },
-    "1": {
+    "davide": {
       "name": "Davide P.",
       "d": 10,
       "h": 0,
       "efficiency": 100
     },
-    "2": {
+    "alberto": {
       "name": "Alberto",
       "d": 10,
       "h": 0,
       "efficiency": 100
     }
+  },
+  group: {
+    "frontend": ["cataldo", "lisa", "dennis"],
+    "backend": ["davide", "alberto"]
   }
-}
+};
+
+export default inizialStore;

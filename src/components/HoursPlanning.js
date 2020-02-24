@@ -6,54 +6,25 @@ import AwIcon from "awicons-react";
 import "../style/HoursPlanning.scss";
 
 import {TeamMate} from "./TeamMate";
-import {DataBlock} from "../data/DataBlock";
 
-export class HoursPlanning extends React.Component {
+import { connect } from "react-redux";
+
+class HoursPlanning extends React.Component {
 
   static propTypes = {
-    title: PropTypes.string,
-    dataBlock: PropTypes.instanceOf(DataBlock)
+    title: PropTypes.string
   };
 
-  _subscriptions;
   newKey;
 
   constructor(props) {
     super(props);
     this.state = {
-      team: {},
-      total: 0,
       emergency: 0,
       editMode: false,
       inputName: ''
     };
-    this._subscriptions = [];
     this.newKey = 0;
-  }
-
-  componentDidMount() {
-    this._subscriptions.push(
-      this.props.dataBlock.team.subscribe((team) => {
-        this.setState(() => ({ team }));
-        this.newKey = this.calcNewKey(team);
-      })
-    );
-    this._subscriptions.push(
-      this.props.dataBlock.total.subscribe((total) => {
-        this.setState(() => ({ total }));
-      })
-    );
-    this._subscriptions.push(
-      this.props.dataBlock.emergency.subscribe((emergency) => {
-        this.setState(() => ({ emergency }));
-      })
-    );
-  }
-
-  componentWillUnmount() {
-    forEach(this._subscriptions, (subscription) => {
-      subscription.unsubscribe();
-    })
   }
 
   calcNewKey = (team) => {
@@ -88,10 +59,11 @@ export class HoursPlanning extends React.Component {
   };
 
   render() {
-    const { team, editMode, inputName, emergency, total } = this.state;
+    const { editMode, inputName, emergency } = this.state;
+    const { mates } = this.props;
 
     const table = [];
-    forEach(team, (mate, key) => {
+    forEach(mates, (mate, key) => {
       table.push(
         <TeamMate
           key={key}
@@ -151,9 +123,28 @@ export class HoursPlanning extends React.Component {
           </div>
           }
         <div className="total">
-          <p>Totale: {parseInt(total)}</p>
+          <p>Totale: {parseInt(this.props.total)} h</p>
         </div>
       </div>
     )
   }
 }
+
+const mapStateToProps = state => {
+  let total = 0;
+  forEach(state.mates, (mate) => {
+    total = total + (mate.h+mate.d*8*100/mate.efficiency)
+  });
+  return({
+    mates: state.mates,
+    total
+  });
+};
+
+const mapDispatchToProps = dispatch => ({
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HoursPlanning);

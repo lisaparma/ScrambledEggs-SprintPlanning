@@ -1,16 +1,16 @@
 import React from 'react';
 import AwIcon from "awicons-react";
+import { connect } from "react-redux";
 
 import {HeadingTitle} from "./HeadingTitle";
-import {HoursPlanning} from "./HoursPlanning";
+import HoursPlanning from "./HoursPlanning";
 
 import "../style/App.scss";
-import {DataBlock} from "../data/DataBlock";
 import {forEach} from "lodash";
 
-import * as data from "../data/teamData.json";
+import {setTeamAction} from "../store/actions";
 
-export class HomePage extends React.Component {
+class HomePage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -19,28 +19,11 @@ export class HomePage extends React.Component {
       totalB: 0,
       fileJSON: null
     };
-
-    const frontEndTeam = data.frontEndTeam;
-    const backEndTeam = data.backEndTeam;
-    this.frontEndTeamBlock = new DataBlock(frontEndTeam);
-    this.backEndTeamBlock = new DataBlock(backEndTeam);
-
     this._subscriptions = [];
     this.fileReader = new FileReader();
   }
 
   componentDidMount() {
-    this._subscriptions.push(
-      this.frontEndTeamBlock.total.subscribe((totalF) => {
-        this.setState(() => ({ totalF }));
-      })
-    );
-
-    this._subscriptions.push(
-      this.backEndTeamBlock.total.subscribe((totalB) => {
-        this.setState(() => ({ totalB }));
-      })
-    );
 
     this.fileReader.onload = (event) => {
       try {
@@ -75,12 +58,6 @@ export class HomePage extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    forEach(this._subscriptions, (subscription) => {
-      subscription.unsubscribe();
-    })
-  }
-
   _importClick = () => {
     this.ref.click();
   };
@@ -96,7 +73,7 @@ export class HomePage extends React.Component {
   render() {
     return (
       <div className="page">
-        <HeadingTitle teamName={data.teamName}/>
+        <HeadingTitle teamName={this.props.teamName}/>
         <AwIcon
           iconName="upload"
           className="uploadIcon"
@@ -111,14 +88,10 @@ export class HomePage extends React.Component {
         />
 
         <div className="sprintPlanning">
-          {this.frontEndTeamBlock &&
-            <HoursPlanning title={'Front-end'} dataBlock={this.frontEndTeamBlock}/>
-          }
-          {this.backEndTeamBlock &&
-            <HoursPlanning title={'Back-end'} dataBlock={this.backEndTeamBlock}/>
-          }
+          <HoursPlanning title={'Front-end'} dataBlock={this.frontEndTeamBlock}/>
+
           <div className="recap">
-            Totale: {parseInt(this.state.totalF) + parseInt(this.state.totalB)} h
+            Totale: {parseInt(this.props.total)} h
           </div>
         </div>
 
@@ -126,3 +99,18 @@ export class HomePage extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  let total = 0;
+  forEach(state.mates, (mate) => {
+    total = total + (mate.h+mate.d*8*100/mate.efficiency)
+  });
+  return({
+    teamName: state.teamName,
+    mates: state.mates,
+    total
+  });
+}
+
+
+export default connect(mapStateToProps)(HomePage);

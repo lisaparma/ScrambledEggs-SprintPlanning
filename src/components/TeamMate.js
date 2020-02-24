@@ -2,41 +2,40 @@ import React from 'react';
 import AwIcon from 'awicons-react';
 
 import "../style/TeamMate.scss";
+
 import PropTypes from "prop-types";
-import {DataBlock} from "../data/DataBlock";
 
 export class TeamMate extends React.Component {
 
   static propTypes = {
     mateKey: PropTypes.string,
     mate: PropTypes.object,
-    dataBlock: PropTypes.instanceOf(DataBlock),
     edit: PropTypes.bool
   };
 
   _onChangeD = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value) {
-      this.props.dataBlock.changeValue(this.props.mateKey, 'd', value);
+      // this.props.dataBlock.changeValue(this.props.mateKey, 'd', value);
     }
   };
 
   _onChangeH = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value) {
-      this.props.dataBlock.changeValue(this.props.mateKey, 'h', value);
+      //this.props.dataBlock.changeValue(this.props.mateKey, 'h', value);
     }
   };
 
   _onChangeEff = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value && value <= 100) {
-      this.props.dataBlock.changeValue(this.props.mateKey, 'efficiency', value);
+      //this.props.dataBlock.changeValue(this.props.mateKey, 'efficiency', value);
     }
   };
 
   _onMinusClick = () => {
-    this.props.dataBlock.deleteMate(this.props.mateKey);
+    //this.props.dataBlock.deleteMate(this.props.mateKey);
   };
 
   render() {
