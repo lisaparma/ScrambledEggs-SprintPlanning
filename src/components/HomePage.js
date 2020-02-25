@@ -7,21 +7,22 @@ import HoursPlanning from "./HoursPlanning";
 
 import "../style/App.scss";
 import {forEach} from "lodash";
+import PropTypes from "prop-types";
 
-import {setTeamAction} from "../store/actions";
 
 class HomePage extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      totalF: 0,
-      totalB: 0,
-      fileJSON: null
-    };
-    this._subscriptions = [];
-    this.fileReader = new FileReader();
-  }
+  static propTypes = {
+    teamName: PropTypes.string,
+    mates: PropTypes.object,
+    total: PropTypes.number,
+  };
+
+  state = {
+    fileJSON: null
+  };
+
+  fileReader = new FileReader();
 
   componentDidMount() {
 
@@ -45,16 +46,11 @@ class HomePage extends React.Component {
       if (nextState.fileJSON.hasOwnProperty("frontEndTeam") && nextState.fileJSON.frontEndTeam) {
         this.frontEndTeamBlock.changeTeam(nextState.fileJSON.frontEndTeam);
       }
-      else {
-        this.frontEndTeamBlock = undefined;
-      }
 
       if (nextState.fileJSON.hasOwnProperty("backEndTeam" ) && nextState.fileJSON.backEndTeam) {
         this.backEndTeamBlock.changeTeam(nextState.fileJSON.backEndTeam);
       }
-      else {
-        this.backEndTeamBlock = undefined;
-      }
+
     }
   }
 
@@ -71,9 +67,10 @@ class HomePage extends React.Component {
   }
 
   render() {
+    const { teamName, total } = this.props;
     return (
       <div className="page">
-        <HeadingTitle teamName={this.props.teamName}/>
+        <HeadingTitle teamName={teamName}/>
         <AwIcon
           iconName="upload"
           className="uploadIcon"
@@ -88,10 +85,10 @@ class HomePage extends React.Component {
         />
 
         <div className="sprintPlanning">
-          <HoursPlanning title={'Front-end'} dataBlock={this.frontEndTeamBlock}/>
+          <HoursPlanning title={'Front-end'} />
 
           <div className="recap">
-            Totale: {parseInt(this.props.total)} h
+            Totale: {parseInt(total)} h
           </div>
         </div>
 
@@ -103,14 +100,15 @@ class HomePage extends React.Component {
 const mapStateToProps = state => {
   let total = 0;
   forEach(state.mates, (mate) => {
-    total = total + (mate.h+mate.d*8*100/mate.efficiency)
+    total = total + (mate.h+mate.d*8*mate.efficiency/100)
   });
+  total = total*(100-state.emergency)/100;
   return({
     teamName: state.teamName,
     mates: state.mates,
     total
   });
-}
+};
 
 
 export default connect(mapStateToProps)(HomePage);

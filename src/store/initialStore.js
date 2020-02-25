@@ -1,6 +1,7 @@
 const inizialStore = {
   "teamName": "Scrambled Eggs",
   "data": Date.now(),
+  "emergency": 0,
   "mates": {
     "cataldo": {
       "name": "Cataldo",

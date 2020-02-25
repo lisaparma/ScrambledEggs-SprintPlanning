@@ -5,27 +5,26 @@ import AwIcon from "awicons-react";
 
 import "../style/HoursPlanning.scss";
 
-import {TeamMate} from "./TeamMate";
+import TeamMate from "./TeamMate";
 
 import { connect } from "react-redux";
+import {setEmergencyAction} from "../store/actions";
 
 class HoursPlanning extends React.Component {
 
   static propTypes = {
-    title: PropTypes.string
+    title: PropTypes.string,
+    mates: PropTypes.object,
+    emergency: PropTypes.number,
+    total: PropTypes.number,
   };
 
-  newKey;
+  newKey = 0;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      emergency: 0,
-      editMode: false,
-      inputName: ''
-    };
-    this.newKey = 0;
-  }
+  state = {
+    editMode: false,
+    inputName: ''
+  };
 
   calcNewKey = (team) => {
     return (max(keys(team))+1);
@@ -34,7 +33,7 @@ class HoursPlanning extends React.Component {
   _onChangeEmergency = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value && value <= 100) {
-      this.props.dataBlock.changeEmergency(value);
+      this.props.setEmergency(value);
     }
   };
 
@@ -59,17 +58,15 @@ class HoursPlanning extends React.Component {
   };
 
   render() {
-    const { editMode, inputName, emergency } = this.state;
-    const { mates } = this.props;
+    const { editMode, inputName } = this.state;
+    const { mates, title, total, emergency } = this.props;
 
     const table = [];
-    forEach(mates, (mate, key) => {
+    forEach(mates, (mate, id) => {
       table.push(
         <TeamMate
-          key={key}
-          mateKey={key}
-          mate={mate}
-          dataBlock={this.props.dataBlock}
+          key={id}
+          id={id}
           edit={editMode}
         />
       );
@@ -78,7 +75,7 @@ class HoursPlanning extends React.Component {
     return (
       <div className="hoursPlanning">
         <div className="title-end">
-          <h3>{this.props.title}</h3>
+          <h3>{title}</h3>
           <AwIcon
             iconName="pencil-alt"
             className="icon"
@@ -123,7 +120,7 @@ class HoursPlanning extends React.Component {
           </div>
           }
         <div className="total">
-          <p>Totale: {parseInt(this.props.total)} h</p>
+          <p>Totale: {parseInt(total)} h</p>
         </div>
       </div>
     )
@@ -133,15 +130,18 @@ class HoursPlanning extends React.Component {
 const mapStateToProps = state => {
   let total = 0;
   forEach(state.mates, (mate) => {
-    total = total + (mate.h+mate.d*8*100/mate.efficiency)
+    total = total + (mate.h+mate.d*8*mate.efficiency/100)
   });
+  total = total*(100-state.emergency)/100;
   return({
     mates: state.mates,
+    emergency: state.emergency,
     total
   });
 };
 
 const mapDispatchToProps = dispatch => ({
+  setEmergency: (emergency) => dispatch(setEmergencyAction(emergency))
 });
 
 export default connect(
