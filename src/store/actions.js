@@ -1,9 +1,4 @@
 
-export const setTeamAction = (team) => ({
-  type: "SET_TEAM",
-  team
-});
-
 export const setDaysAction = (id, days) => ({
   type: "SET_DAYS",
   id,

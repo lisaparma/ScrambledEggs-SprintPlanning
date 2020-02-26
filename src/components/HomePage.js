@@ -1,13 +1,12 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import AwIcon from "awicons-react";
 import { connect } from "react-redux";
 
-import {HeadingTitle} from "./HeadingTitle";
-import HoursPlanning from "./HoursPlanning";
-
 import "../style/App.scss";
-import {forEach} from "lodash";
-import PropTypes from "prop-types";
+
+import { HeadingTitle } from "./HeadingTitle";
+import HoursPlanning from "./HoursPlanning";
 
 
 class HomePage extends React.Component {
@@ -98,15 +97,10 @@ class HomePage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  let total = 0;
-  forEach(state.mates, (mate) => {
-    total = total + (mate.h+mate.d*8*mate.efficiency/100)
-  });
-  total = total*(100-state.emergency)/100;
   return({
     teamName: state.teamName,
     mates: state.mates,
-    total
+    total: state.total
   });
 };
 

@@ -1,11 +1,20 @@
-const setTeam = (state, action) => {
+import { forEach } from 'lodash';
+
+function calcTotal(mates, emergency) {
+  let total = 0;
+  forEach(mates, (mate) => {
+    const mateAvailability = mate.h + mate.d * 8 * mate.efficiency / 100;
+    total = total + mateAvailability
+  });
+  return total*(100 - emergency) / 100;
+}
+
+const matesReducer = (state, action) => {
 
   switch (action.type) {
     case "SET_TEAM":
       return {
         ...state,
-        teamName: action.team.teamName,
-        team: action.team
       };
 
     case "SET_DAYS":
@@ -15,7 +24,8 @@ const setTeam = (state, action) => {
       newMates1[action.id] = newMate1;
       return {
         ...state,
-        mates: newMates1
+        mates: newMates1,
+        total: calcTotal(newMates1, state.emergency)
       };
 
     case "SET_HOURS":
@@ -25,7 +35,8 @@ const setTeam = (state, action) => {
       newMates2[action.id] = newMate2;
       return {
         ...state,
-        mates: newMates2
+        mates: newMates2,
+        total: calcTotal(newMates2, state.emergency)
       };
 
     case "SET_EFFICIENCY":
@@ -35,13 +46,15 @@ const setTeam = (state, action) => {
       newMates3[action.id] = newMate3;
       return {
         ...state,
-        mates: newMates3
+        mates: newMates3,
+        total: calcTotal(newMates3, state.emergency)
       };
 
     case "SET_EMERGENCY":
       return {
         ...state,
-        emergency: action.emergency
+        emergency: action.emergency,
+        total: calcTotal(state.mates, action.emergency)
       };
 
     case "DELETE_MATE": {
@@ -58,4 +71,4 @@ const setTeam = (state, action) => {
   }
 };
 
-export default setTeam;
+export default matesReducer;

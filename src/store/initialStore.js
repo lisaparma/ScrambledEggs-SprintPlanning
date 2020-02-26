@@ -1,3 +1,14 @@
+import {forEach} from "lodash";
+
+function calcTotal(mates, emergency) {
+  let total = 0;
+  forEach(mates, (mate) => {
+    const mateAvailability = mate.h + mate.d * 8 * mate.efficiency / 100;
+    total = total + mateAvailability
+  });
+  return total*(100 - emergency) / 100;
+}
+
 const inizialStore = {
   "teamName": "Scrambled Eggs",
   "data": Date.now(),
@@ -37,7 +48,9 @@ const inizialStore = {
   group: {
     "frontend": ["cataldo", "lisa", "dennis"],
     "backend": ["davide", "alberto"]
-  }
+  },
 };
+
+inizialStore.total = calcTotal(inizialStore.mates, inizialStore.emergency);
 
 export default inizialStore;

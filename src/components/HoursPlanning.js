@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { forEach, max, keys } from 'lodash'
 import AwIcon from "awicons-react";
+import { connect } from "react-redux";
+import { forEach, max, keys } from 'lodash'
 
 import "../style/HoursPlanning.scss";
 
+import { setEmergencyAction } from "../store/actions";
 import TeamMate from "./TeamMate";
-
-import { connect } from "react-redux";
-import {setEmergencyAction} from "../store/actions";
 
 class HoursPlanning extends React.Component {
 
@@ -128,15 +127,10 @@ class HoursPlanning extends React.Component {
 }
 
 const mapStateToProps = state => {
-  let total = 0;
-  forEach(state.mates, (mate) => {
-    total = total + (mate.h+mate.d*8*mate.efficiency/100)
-  });
-  total = total*(100-state.emergency)/100;
   return({
     mates: state.mates,
     emergency: state.emergency,
-    total
+    total: state.total
   });
 };
 

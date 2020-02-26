@@ -1,12 +1,12 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import AwIcon from 'awicons-react';
+import { connect } from "react-redux";
 
 import "../style/TeamMate.scss";
 
-import PropTypes from "prop-types";
-
-import { connect } from "react-redux";
 import { deleteMateAction, setDaysAction, setEfficiencyAction, setHoursAction } from "../store/actions";
+
 
 class TeamMate extends React.Component {
 
