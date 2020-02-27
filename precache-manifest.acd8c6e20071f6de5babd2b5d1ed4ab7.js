@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f66f9d6bbb1f4c4e63ffc7045f19037b",
+    "revision": "976cc6e0b00c1e6e541a4824d7f7bc0d",
     "url": "/ScrambledEggs-SprintPlanning/index.html"
   },
   {
-    "revision": "99012933be33ee88bd8f",
+    "revision": "8d2c40ad45f865ec4ef0",
     "url": "/ScrambledEggs-SprintPlanning/static/css/2.822ab4b7.chunk.css"
   },
   {
-    "revision": "935099cafee85ee2d478",
-    "url": "/ScrambledEggs-SprintPlanning/static/css/main.a6e4d1ff.chunk.css"
+    "revision": "dc71397428ebf7f81c95",
+    "url": "/ScrambledEggs-SprintPlanning/static/css/main.05fd25f3.chunk.css"
   },
   {
-    "revision": "99012933be33ee88bd8f",
-    "url": "/ScrambledEggs-SprintPlanning/static/js/2.99eb4530.chunk.js"
+    "revision": "8d2c40ad45f865ec4ef0",
+    "url": "/ScrambledEggs-SprintPlanning/static/js/2.7fab54ff.chunk.js"
   },
   {
-    "revision": "935099cafee85ee2d478",
-    "url": "/ScrambledEggs-SprintPlanning/static/js/main.e3abe58c.chunk.js"
+    "revision": "dc71397428ebf7f81c95",
+    "url": "/ScrambledEggs-SprintPlanning/static/js/main.9ad13a2a.chunk.js"
   },
   {
     "revision": "e2c2e5740758b5fcddd1",
