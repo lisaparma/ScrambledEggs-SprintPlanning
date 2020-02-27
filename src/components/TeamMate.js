@@ -1,42 +1,44 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import AwIcon from 'awicons-react';
+import { connect } from "react-redux";
 
 import "../style/TeamMate.scss";
-import PropTypes from "prop-types";
-import {DataBlock} from "../data/DataBlock";
 
-export class TeamMate extends React.Component {
+import { deleteMateAction, setDaysAction, setEfficiencyAction, setHoursAction } from "../store/actions";
+
+
+class TeamMate extends React.Component {
 
   static propTypes = {
-    mateKey: PropTypes.string,
+    id: PropTypes.string,
     mate: PropTypes.object,
-    dataBlock: PropTypes.instanceOf(DataBlock),
     edit: PropTypes.bool
   };
 
   _onChangeD = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value) {
-      this.props.dataBlock.changeValue(this.props.mateKey, 'd', value);
+      this.props.setDays(this.props.id, value);
     }
   };
 
   _onChangeH = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value) {
-      this.props.dataBlock.changeValue(this.props.mateKey, 'h', value);
+      this.props.setHours(this.props.id, value);
     }
   };
 
   _onChangeEff = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value && value <= 100) {
-      this.props.dataBlock.changeValue(this.props.mateKey, 'efficiency', value);
+      this.props.setEfficiency(this.props.id, value)
     }
   };
 
   _onMinusClick = () => {
-    this.props.dataBlock.deleteMate(this.props.mateKey);
+    this.props.deleteMate(this.props.id);
   };
 
   render() {
@@ -88,3 +90,19 @@ export class TeamMate extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state, ownProps) => ({
+  mate: state.mates[ownProps.id]
+});
+
+const mapDispatchToProps = dispatch => ({
+  setDays: (id, days) => dispatch(setDaysAction(id, days)),
+  setHours: (id, hours) => dispatch(setHoursAction(id, hours)),
+  setEfficiency: (id, efficiency) => dispatch(setEfficiencyAction(id, efficiency)),
+  deleteMate: (id) => dispatch(deleteMateAction(id))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TeamMate);

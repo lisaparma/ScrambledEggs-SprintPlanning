@@ -1,46 +1,34 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import PropTypes from "prop-types";
 import AwIcon from "awicons-react";
-
-import {HeadingTitle} from "./HeadingTitle";
-import {HoursPlanning} from "./HoursPlanning";
+import { connect } from "react-redux";
+import { map, forEach } from 'lodash';
 
 import "../style/App.scss";
-import {DataBlock} from "../data/DataBlock";
-import {forEach} from "lodash";
 
-import * as data from "../data/teamData.json";
+import { HeadingTitle } from "./HeadingTitle";
+import HoursPlanning from "./HoursPlanning";
+import {calcTotal, decodeJSON} from "../utilities";
+import {  setTeamAction } from "../store/actions";
 
-export class HomePage extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      totalF: 0,
-      totalB: 0,
-      fileJSON: null
-    };
+class HomePage extends React.Component {
 
-    const frontEndTeam = data.frontEndTeam;
-    const backEndTeam = data.backEndTeam;
-    this.frontEndTeamBlock = new DataBlock(frontEndTeam);
-    this.backEndTeamBlock = new DataBlock(backEndTeam);
+  static propTypes = {
+    teamName: PropTypes.string,
+    mates: PropTypes.object,
+    groups: PropTypes.object
+  };
 
-    this._subscriptions = [];
-    this.fileReader = new FileReader();
-  }
+  fileRef = React.createRef();
+
+  state = {
+    fileJSON: null
+  };
+
+  fileReader = new FileReader();
 
   componentDidMount() {
-    this._subscriptions.push(
-      this.frontEndTeamBlock.total.subscribe((totalF) => {
-        this.setState(() => ({ totalF }));
-      })
-    );
-
-    this._subscriptions.push(
-      this.backEndTeamBlock.total.subscribe((totalB) => {
-        this.setState(() => ({ totalB }));
-      })
-    );
 
     this.fileReader.onload = (event) => {
       try {
@@ -59,44 +47,43 @@ export class HomePage extends React.Component {
 
   componentWillUpdate(nextProps, nextState, nextContext) {
     if (this.state.fileJSON !== nextState.fileJSON) {
-      if (nextState.fileJSON.hasOwnProperty("frontEndTeam") && nextState.fileJSON.frontEndTeam) {
-        this.frontEndTeamBlock.changeTeam(nextState.fileJSON.frontEndTeam);
+      if(nextState.fileJSON.hasOwnProperty("people")) {
+        const { info, groups, mates } = decodeJSON(nextState.fileJSON);
+        this.props.setTeam(info, groups, mates);
       }
       else {
-        this.frontEndTeamBlock = undefined;
-      }
-
-      if (nextState.fileJSON.hasOwnProperty("backEndTeam" ) && nextState.fileJSON.backEndTeam) {
-        this.backEndTeamBlock.changeTeam(nextState.fileJSON.backEndTeam);
-      }
-      else {
-        this.backEndTeamBlock = undefined;
+        console.error("Invalid json")
       }
     }
   }
 
-  componentWillUnmount() {
-    forEach(this._subscriptions, (subscription) => {
-      subscription.unsubscribe();
-    })
-  }
-
   _importClick = () => {
-    this.ref.click();
+    this.fileRef.current.click();
   };
 
-  _onChangeFile(event) {
+  _onChangeFile = (event) => {
     event.stopPropagation();
     event.preventDefault();
 
     let file = event.target.files[0];
     this.fileReader.readAsText(file);
-  }
+  };
 
   render() {
+    const { teamName, groups, mates } = this.props;
+
+    const groupsRendered = map(groups, (group, key) =>
+      <HoursPlanning groupId={key} key={key} />
+    );
+
+    let total = 0;
+    forEach(groups, (group) => {
+      total = total  + calcTotal(mates, group.mates, group.emergency);
+    });
+
     return (
       <div className="page">
-        <HeadingTitle teamName={data.teamName}/>
+        <HeadingTitle teamName={teamName}/>
         <AwIcon
           iconName="upload"
           className="uploadIcon"
@@ -105,20 +92,19 @@ export class HomePage extends React.Component {
         <input
           type="file"
           accept=".json"
-          ref={(ref) => this.ref = ref }
+          ref={this.fileRef}
           style={{display: "none"}}
-          onChange={this._onChangeFile.bind(this)}
+          onChange={this._onChangeFile}
         />
 
         <div className="sprintPlanning">
-          {this.frontEndTeamBlock &&
-            <HoursPlanning title={'Front-end'} dataBlock={this.frontEndTeamBlock}/>
-          }
-          {this.backEndTeamBlock &&
-            <HoursPlanning title={'Back-end'} dataBlock={this.backEndTeamBlock}/>
-          }
+
+          <Fragment>
+            {groupsRendered}
+          </Fragment>
+
           <div className="recap">
-            Totale: {parseInt(this.state.totalF) + parseInt(this.state.totalB)} h
+            Totale: {parseInt(total)} h
           </div>
         </div>
 
@@ -126,3 +112,17 @@ export class HomePage extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return({
+    teamName: state.info.teamName,
+    mates: state.mates,
+    groups: state.groups
+  });
+};
+
+const mapDispatchToProps = dispatch => ({
+  setTeam: (info, groups, mates) => dispatch(setTeamAction(info, groups, mates))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
