@@ -25,6 +25,19 @@ const matesReducer = (state = {}, action) => {
         [action.id]: newMate3,
       };
 
+    case "ADD_MATE": {
+      const newMates1 = { ...state };
+      newMates1[action.id] = {
+        name: action.name,
+        d: 0,
+        h: 0,
+        efficiency: 100
+      };
+      return {
+        ...newMates1
+      }
+    }
+
     case "DELETE_MATE": {
       const newMates1 = { ...state };
       delete newMates1[action.id];

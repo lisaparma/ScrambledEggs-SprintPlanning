@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AwIcon from "awicons-react";
 import { connect } from "react-redux";
-import { forEach, max, keys, find } from 'lodash'
+import { forEach, find } from 'lodash'
 
 import "../style/HoursPlanning.scss";
 
-import { setEmergencyAction } from "../store/actions";
+import { addMateAction, setEmergencyAction } from "../store/actions";
 import TeamMate from "./TeamMate";
-import {calcTotal} from "../utilities";
+import { calcTotal } from "../utilities";
 
 class HoursPlanning extends React.Component {
 
@@ -20,16 +20,11 @@ class HoursPlanning extends React.Component {
     emergency: PropTypes.number
   };
 
-  // newKey = 0;
+  inputRef = React.createRef();
 
   state = {
     editMode: false,
-    // inputName: ''
   };
-
-  // calcNewKey = (team) => {
-  //   return (max(keys(team))+1);
-  // };
 
   _onChangeEmergency = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
@@ -42,30 +37,21 @@ class HoursPlanning extends React.Component {
     this.setState((prevState) => ({ editMode: !prevState.editMode}))
   };
 
-  // _onChangeInput = (ev) => {
-  //   ev.persist();
-  //   this.setState(() => ({ inputName: ev.target.value }));
-  // };
+  _onKeyDown = (ev) => {
+    if (ev.key === "Enter") {
+      this._onPlusClick();
+    }
+  };
 
-  // _onKeyDown = (ev) => {
-  //   if (ev.key === "Enter") {
-  //     this._onPlusClick();
-  //   }
-  // };
+  _onPlusClick = () => {
+    let id = this.inputRef.current.value.toLocaleLowerCase();
+    while(find(this.props.allMates, (mate, key) => key === id)) {
+      id = id + "_"
+    }
+    this.props.addMate(id, this.inputRef.current.value, this.props.groupId);
+    this.inputRef.current.value = "";
 
-  // _onPlusClick = () => {
-  //   //this.props.dataBlock.addMate(this.newKey, { name: this.state.inputName, d: 0, h: 0, efficiency: 100 });
-  //   this.setState(() => ({ inputName: '' }));
-  // };
-
-  calcTotal(mates, emergency) {
-    let total = 0;
-    forEach(mates, (mate) => {
-      const mateAvailability = mate.h + mate.d * 8 * mate.efficiency / 100;
-      total = total + mateAvailability
-    });
-    return total*(100 - emergency) / 100;
-  }
+  };
 
   render() {
     const { editMode, inputName } = this.state;
@@ -118,21 +104,21 @@ class HoursPlanning extends React.Component {
             <span>%</span>
           </div>
         </div>
-        {/*{editMode &&*/}
-          {/*<div className="add">*/}
-            {/*<AwIcon*/}
-              {/*iconName="plus-circle"*/}
-              {/*className="plus"*/}
-              {/*onClick={this._onPlusClick}*/}
-            {/*/>*/}
-            {/*<input*/}
-              {/*type={'text'}*/}
-              {/*value={inputName}*/}
-              {/*onChange={this._onChangeInput}*/}
-              {/*onKeyDown={this._onKeyDown}*/}
-            {/*/>*/}
-          {/*</div>*/}
-          {/*}*/}
+        {editMode &&
+          <div className="add">
+            <AwIcon
+              iconName="plus-circle"
+              className="plus"
+              onClick={this._onPlusClick}
+            />
+            <input
+              type={'text'}
+              value={inputName}
+              ref={this.inputRef}
+              onKeyDown={this._onKeyDown}
+            />
+          </div>
+          }
         <div className="total">
           <p>Totale: {parseInt(total)} h</p>
         </div>
@@ -151,7 +137,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  setEmergency: (groupId, emergency) => dispatch(setEmergencyAction(groupId, emergency))
+  setEmergency: (groupId, emergency) => dispatch(setEmergencyAction(groupId, emergency)),
+  addMate: (id, name, groupId) => dispatch(addMateAction(id, name, groupId))
 });
 
 export default connect(

@@ -25,6 +25,13 @@ export const setEmergencyAction = (groupId, emergency) => ({
   emergency
 });
 
+export const addMateAction = (id, name, groupId) => ({
+  type: "ADD_MATE",
+  id,
+  name,
+  groupId
+});
+
 export const deleteMateAction = (id) => ({
   type: "DELETE_MATE",
   id
