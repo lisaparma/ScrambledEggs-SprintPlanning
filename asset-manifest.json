@@ -1,17 +1,21 @@
 {
   "files": {
-    "main.css": "/ScrambledEggs-SprintPlanning/static/css/main.ef833f58.chunk.css",
-    "main.js": "/ScrambledEggs-SprintPlanning/static/js/main.05131b7f.chunk.js",
-    "main.js.map": "/ScrambledEggs-SprintPlanning/static/js/main.05131b7f.chunk.js.map",
+    "main.css": "/ScrambledEggs-SprintPlanning/static/css/main.a6e4d1ff.chunk.css",
+    "main.js": "/ScrambledEggs-SprintPlanning/static/js/main.e3abe58c.chunk.js",
+    "main.js.map": "/ScrambledEggs-SprintPlanning/static/js/main.e3abe58c.chunk.js.map",
     "runtime~main.js": "/ScrambledEggs-SprintPlanning/static/js/runtime~main.65521c2a.js",
     "runtime~main.js.map": "/ScrambledEggs-SprintPlanning/static/js/runtime~main.65521c2a.js.map",
-    "static/js/2.d1be1b80.chunk.js": "/ScrambledEggs-SprintPlanning/static/js/2.d1be1b80.chunk.js",
-    "static/js/2.d1be1b80.chunk.js.map": "/ScrambledEggs-SprintPlanning/static/js/2.d1be1b80.chunk.js.map",
+    "static/css/2.822ab4b7.chunk.css": "/ScrambledEggs-SprintPlanning/static/css/2.822ab4b7.chunk.css",
+    "static/js/2.99eb4530.chunk.js": "/ScrambledEggs-SprintPlanning/static/js/2.99eb4530.chunk.js",
+    "static/js/2.99eb4530.chunk.js.map": "/ScrambledEggs-SprintPlanning/static/js/2.99eb4530.chunk.js.map",
     "index.html": "/ScrambledEggs-SprintPlanning/index.html",
-    "precache-manifest.5823c1001c0139ef99512fa2645bd276.js": "/ScrambledEggs-SprintPlanning/precache-manifest.5823c1001c0139ef99512fa2645bd276.js",
+    "precache-manifest.7ae19d4ef16338b8ca84e21db664b1d3.js": "/ScrambledEggs-SprintPlanning/precache-manifest.7ae19d4ef16338b8ca84e21db664b1d3.js",
     "service-worker.js": "/ScrambledEggs-SprintPlanning/service-worker.js",
-    "static/css/main.ef833f58.chunk.css.map": "/ScrambledEggs-SprintPlanning/static/css/main.ef833f58.chunk.css.map",
+    "static/css/2.822ab4b7.chunk.css.map": "/ScrambledEggs-SprintPlanning/static/css/2.822ab4b7.chunk.css.map",
+    "static/css/main.a6e4d1ff.chunk.css.map": "/ScrambledEggs-SprintPlanning/static/css/main.a6e4d1ff.chunk.css.map",
     "static/media/egg.png": "/ScrambledEggs-SprintPlanning/static/media/egg.cee197da.png",
-    "static/media/App.scss": "/ScrambledEggs-SprintPlanning/static/media/fa-solid-900.c2801fb4.svg"
+    "static/media/brands.css": "/ScrambledEggs-SprintPlanning/static/media/fa-brands-400.b564da88.woff",
+    "static/media/regular.css": "/ScrambledEggs-SprintPlanning/static/media/fa-regular-400.a0e3ac82.ttf",
+    "static/media/solid.css": "/ScrambledEggs-SprintPlanning/static/media/fa-solid-900.cdfec5cf.woff"
   }
 }
