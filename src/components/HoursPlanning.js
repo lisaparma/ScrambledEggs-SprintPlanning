@@ -2,33 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AwIcon from "awicons-react";
 import { connect } from "react-redux";
-import { forEach, max, keys } from 'lodash'
+import { forEach, max, keys, find } from 'lodash'
 
 import "../style/HoursPlanning.scss";
 
 import { setEmergencyAction } from "../store/actions";
 import TeamMate from "./TeamMate";
+import {calcTotal} from "../utilities";
 
 class HoursPlanning extends React.Component {
 
   static propTypes = {
     groupId: PropTypes.string,
+    allMates: PropTypes.object,
     name: PropTypes.string,
     mates: PropTypes.array,
-    emergency: PropTypes.number,
-    total: PropTypes.number,
+    emergency: PropTypes.number
   };
 
-  newKey = 0;
+  // newKey = 0;
 
   state = {
     editMode: false,
-    inputName: ''
+    // inputName: ''
   };
 
-  calcNewKey = (team) => {
-    return (max(keys(team))+1);
-  };
+  // calcNewKey = (team) => {
+  //   return (max(keys(team))+1);
+  // };
 
   _onChangeEmergency = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
@@ -41,36 +42,49 @@ class HoursPlanning extends React.Component {
     this.setState((prevState) => ({ editMode: !prevState.editMode}))
   };
 
-  _onChangeInput = (ev) => {
-    ev.persist();
-    this.setState(() => ({ inputName: ev.target.value }));
-  };
+  // _onChangeInput = (ev) => {
+  //   ev.persist();
+  //   this.setState(() => ({ inputName: ev.target.value }));
+  // };
 
-  _onKeyDown = (ev) => {
-    if (ev.key === "Enter") {
-      this._onPlusClick();
-    }
-  };
+  // _onKeyDown = (ev) => {
+  //   if (ev.key === "Enter") {
+  //     this._onPlusClick();
+  //   }
+  // };
 
-  _onPlusClick = () => {
-    //this.props.dataBlock.addMate(this.newKey, { name: this.state.inputName, d: 0, h: 0, efficiency: 100 });
-    this.setState(() => ({ inputName: '' }));
-  };
+  // _onPlusClick = () => {
+  //   //this.props.dataBlock.addMate(this.newKey, { name: this.state.inputName, d: 0, h: 0, efficiency: 100 });
+  //   this.setState(() => ({ inputName: '' }));
+  // };
+
+  calcTotal(mates, emergency) {
+    let total = 0;
+    forEach(mates, (mate) => {
+      const mateAvailability = mate.h + mate.d * 8 * mate.efficiency / 100;
+      total = total + mateAvailability
+    });
+    return total*(100 - emergency) / 100;
+  }
 
   render() {
     const { editMode, inputName } = this.state;
-    const { mates, name, total, emergency } = this.props;
+    const { mates, name, emergency, allMates } = this.props;
 
     const table = [];
     forEach(mates, (mate) => {
-      table.push(
-        <TeamMate
-          key={mate}
-          id={mate}
-          edit={editMode}
-        />
-      );
+      if(find(allMates, (m, key) => key === mate)) {
+        table.push(
+          <TeamMate
+            key={mate}
+            id={mate}
+            edit={editMode}
+          />
+        );
+      }
     });
+
+    const total = calcTotal(allMates, mates, emergency);
 
     return (
       <div className="hoursPlanning">
@@ -104,21 +118,21 @@ class HoursPlanning extends React.Component {
             <span>%</span>
           </div>
         </div>
-        {editMode &&
-          <div className="add">
-            <AwIcon
-              iconName="plus-circle"
-              className="plus"
-              onClick={this._onPlusClick}
-            />
-            <input
-              type={'text'}
-              value={inputName}
-              onChange={this._onChangeInput}
-              onKeyDown={this._onKeyDown}
-            />
-          </div>
-          }
+        {/*{editMode &&*/}
+          {/*<div className="add">*/}
+            {/*<AwIcon*/}
+              {/*iconName="plus-circle"*/}
+              {/*className="plus"*/}
+              {/*onClick={this._onPlusClick}*/}
+            {/*/>*/}
+            {/*<input*/}
+              {/*type={'text'}*/}
+              {/*value={inputName}*/}
+              {/*onChange={this._onChangeInput}*/}
+              {/*onKeyDown={this._onKeyDown}*/}
+            {/*/>*/}
+          {/*</div>*/}
+          {/*}*/}
         <div className="total">
           <p>Totale: {parseInt(total)} h</p>
         </div>
@@ -129,10 +143,10 @@ class HoursPlanning extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return({
+    allMates: state.mates,
     name: state.groups[ownProps.groupId].name,
     mates: state.groups[ownProps.groupId].mates,
-    emergency: state.groups[ownProps.groupId].emergency,
-    total: state.groups[ownProps.groupId].total
+    emergency: state.groups[ownProps.groupId].emergency
   });
 };
 
