@@ -17,11 +17,11 @@ export const setEfficiencyAction = (id, efficiency) => ({
   efficiency
 });
 
-export const setEmergencyAction = (emergency) => ({
+export const setEmergencyAction = (groupId, emergency) => ({
   type: "SET_EMERGENCY",
+  groupId,
   emergency
 });
-
 
 export const deleteMateAction = (id) => ({
   type: "DELETE_MATE",

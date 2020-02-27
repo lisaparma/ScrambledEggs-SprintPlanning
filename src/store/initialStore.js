@@ -10,10 +10,11 @@ function calcTotal(mates, emergency) {
 }
 
 const inizialStore = {
-  "teamName": "Scrambled Eggs",
-  "data": Date.now(),
-  "emergency": 0,
-  "mates": {
+  info: {
+    teamName: "Scrambled Eggs",
+    data: Date.now()
+  },
+  mates: {
     "cataldo": {
       "name": "Cataldo",
       "d": 10,
@@ -45,12 +46,20 @@ const inizialStore = {
       "efficiency": 100
     }
   },
-  group: {
-    "frontend": ["cataldo", "lisa", "dennis"],
-    "backend": ["davide", "alberto"]
-  },
+  groups: {
+    "frontend": {
+      name: "Front-end",
+      mates: ["cataldo", "lisa", "dennis"],
+      emergency: 20
+    },
+    "backend": {
+        name: "Back-end",
+        mates: ["davide", "alberto"],
+        emergency: 20
+      }
+  }
 };
 
-inizialStore.total = calcTotal(inizialStore.mates, inizialStore.emergency);
+inizialStore.info.total = calcTotal(inizialStore.mates, inizialStore.emergency);
 
 export default inizialStore;

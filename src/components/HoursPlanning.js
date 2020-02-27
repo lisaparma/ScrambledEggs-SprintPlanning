@@ -12,8 +12,9 @@ import TeamMate from "./TeamMate";
 class HoursPlanning extends React.Component {
 
   static propTypes = {
-    title: PropTypes.string,
-    mates: PropTypes.object,
+    groupId: PropTypes.string,
+    name: PropTypes.string,
+    mates: PropTypes.array,
     emergency: PropTypes.number,
     total: PropTypes.number,
   };
@@ -32,7 +33,7 @@ class HoursPlanning extends React.Component {
   _onChangeEmergency = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value && value <= 100) {
-      this.props.setEmergency(value);
+      this.props.setEmergency(this.props.groupId, value);
     }
   };
 
@@ -52,20 +53,20 @@ class HoursPlanning extends React.Component {
   };
 
   _onPlusClick = () => {
-    this.props.dataBlock.addMate(this.newKey, { name: this.state.inputName, d: 0, h: 0, efficiency: 100 });
+    //this.props.dataBlock.addMate(this.newKey, { name: this.state.inputName, d: 0, h: 0, efficiency: 100 });
     this.setState(() => ({ inputName: '' }));
   };
 
   render() {
     const { editMode, inputName } = this.state;
-    const { mates, title, total, emergency } = this.props;
+    const { mates, name, total, emergency } = this.props;
 
     const table = [];
-    forEach(mates, (mate, id) => {
+    forEach(mates, (mate) => {
       table.push(
         <TeamMate
-          key={id}
-          id={id}
+          key={mate}
+          id={mate}
           edit={editMode}
         />
       );
@@ -74,7 +75,7 @@ class HoursPlanning extends React.Component {
     return (
       <div className="hoursPlanning">
         <div className="title-end">
-          <h3>{title}</h3>
+          <h3>{name}</h3>
           <AwIcon
             iconName="pencil-alt"
             className="icon"
@@ -126,16 +127,17 @@ class HoursPlanning extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return({
-    mates: state.mates,
-    emergency: state.emergency,
-    total: state.total
+    name: state.groups[ownProps.groupId].name,
+    mates: state.groups[ownProps.groupId].mates,
+    emergency: state.groups[ownProps.groupId].emergency,
+    total: state.groups[ownProps.groupId].total
   });
 };
 
 const mapDispatchToProps = dispatch => ({
-  setEmergency: (emergency) => dispatch(setEmergencyAction(emergency))
+  setEmergency: (groupId, emergency) => dispatch(setEmergencyAction(groupId, emergency))
 });
 
 export default connect(

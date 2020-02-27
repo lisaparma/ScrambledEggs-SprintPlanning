@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from "prop-types";
 import AwIcon from "awicons-react";
 import { connect } from "react-redux";
+import { map } from 'lodash';
 
 import "../style/App.scss";
 
@@ -14,6 +15,7 @@ class HomePage extends React.Component {
   static propTypes = {
     teamName: PropTypes.string,
     mates: PropTypes.object,
+    groups: PropTypes.object,
     total: PropTypes.number,
   };
 
@@ -66,7 +68,12 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const { teamName, total } = this.props;
+    const { teamName, groups, total } = this.props;
+
+    const groupsRendered = map(groups, (group, key) =>
+      <HoursPlanning groupId={key} key={key} />
+    );
+
     return (
       <div className="page">
         <HeadingTitle teamName={teamName}/>
@@ -84,7 +91,10 @@ class HomePage extends React.Component {
         />
 
         <div className="sprintPlanning">
-          <HoursPlanning title={'Front-end'} />
+
+          <Fragment>
+            {groupsRendered}
+          </Fragment>
 
           <div className="recap">
             Totale: {parseInt(total)} h
@@ -98,8 +108,9 @@ class HomePage extends React.Component {
 
 const mapStateToProps = state => {
   return({
-    teamName: state.teamName,
+    teamName: state.info.teamName,
     mates: state.mates,
+    groups: state.groups,
     total: state.total
   });
 };
