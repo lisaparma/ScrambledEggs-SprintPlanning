@@ -6,13 +6,16 @@
 }
 
 html, body, #root {
-  height: 100%;
-  width: 100%;
   background-color: $white2;
   font-size: 18px;
 }
 
 .page {
+  background-color: $white2;
+  width: fit-content;
+  margin: auto;
+  padding: 12px;
+
   .heading {
     margin: 2em auto;
     width: fit-content;
@@ -30,11 +33,32 @@ html, body, #root {
       width: 100px;
     }
   }
+  .actionIcons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 
-  .uploadIcon {
-    text-align: center;
-    :hover {
-      color: $blue3
+    .action {
+      padding: 6px;
+      display: flex;
+      flex-direction: row;
+      font-size: 14px;
+      cursor: pointer;
+      i, span {
+        color: $grey;
+        align-self: center;
+      }
+
+      &:hover {
+        i, span {
+          color: $blue3
+        }
+      }
+      .actionIcon {
+        font-size: 18px;
+        padding-right: 6px;
+        padding-left: 6px;
+      }
     }
   }
 

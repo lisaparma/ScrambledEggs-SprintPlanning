@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import AwIcon from "awicons-react";
 import { connect } from "react-redux";
 import { map, forEach } from 'lodash';
+import html2canvas from "html2canvas";
 
 import "../style/App.scss";
 
@@ -17,7 +18,8 @@ class HomePage extends React.Component {
   static propTypes = {
     teamName: PropTypes.string,
     mates: PropTypes.object,
-    groups: PropTypes.object
+    groups: PropTypes.object,
+    data: PropTypes.objectOf(Date)
   };
 
   fileRef = React.createRef();
@@ -69,6 +71,18 @@ class HomePage extends React.Component {
     this.fileReader.readAsText(file);
   };
 
+  _downloadClick = () => {
+    html2canvas(document.querySelector("#print"))
+      .then(canvas => {
+        const img = canvas.toDataURL();
+        const link = document.createElement("a");
+        const date = new Date(this.props.date);
+        link.download = `sprintPlanning_${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+        link.href = img;
+        link.click();
+    });
+  };
+
   render() {
     const { teamName, groups, mates } = this.props;
 
@@ -82,20 +96,31 @@ class HomePage extends React.Component {
     });
 
     return (
-      <div className="page">
+      <div className="page" id="print">
         <HeadingTitle teamName={teamName}/>
-        <AwIcon
-          iconName="upload"
-          className="uploadIcon"
-          onClick={this._importClick}
-        />
-        <input
-          type="file"
-          accept=".json"
-          ref={this.fileRef}
-          style={{display: "none"}}
-          onChange={this._onChangeFile}
-        />
+        <div className="actionIcons">
+          <div className="action" onClick={this._importClick}>
+            <AwIcon
+              iconName="upload"
+              className="actionIcon"
+            />
+            <span>Upload JSON</span>
+            <input
+              type="file"
+              accept=".json"
+              ref={this.fileRef}
+              style={{display: "none"}}
+              onChange={this._onChangeFile}
+            />
+          </div>
+          <div className="action" onClick={this._downloadClick}>
+            <AwIcon
+              iconName="download"
+              className="actionIcon"
+            />
+            <span>Download as PNG</span>
+          </div>
+        </div>
 
         <div className="sprintPlanning">
 
@@ -117,7 +142,8 @@ const mapStateToProps = state => {
   return({
     teamName: state.info.teamName,
     mates: state.mates,
-    groups: state.groups
+    groups: state.groups,
+    date: state.info.date
   });
 };
 
