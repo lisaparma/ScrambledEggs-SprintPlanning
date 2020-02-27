@@ -1,6 +1,12 @@
 const matesReducer = (state = {}, action) => {
 
   switch (action.type) {
+    case "SET_TEAM": {
+      return {
+        ...action.mates
+      }
+    }
+
     case "SET_DAYS":
       const newMate1 = { ...state[action.id] };
       newMate1['d'] = action.days;

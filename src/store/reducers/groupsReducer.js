@@ -3,6 +3,12 @@ import { forEach, remove } from 'lodash';
 const groupsReducer = (state = {}, action) => {
 
   switch (action.type) {
+    case "SET_TEAM": {
+      return {
+        ...action.groups
+      }
+    }
+
     case "SET_EMERGENCY": {
       const newGroup = { ...state[action.groupId]};
       newGroup.emergency = action.emergency;

@@ -8,7 +8,8 @@ import "../style/App.scss";
 
 import { HeadingTitle } from "./HeadingTitle";
 import HoursPlanning from "./HoursPlanning";
-import {calcTotal} from "../utilities";
+import {calcTotal, decodeJSON} from "../utilities";
+import {  setTeamAction } from "../store/actions";
 
 
 class HomePage extends React.Component {
@@ -19,53 +20,54 @@ class HomePage extends React.Component {
     groups: PropTypes.object
   };
 
-  // state = {
-  //   fileJSON: null
-  // };
+  fileRef = React.createRef();
 
-  // fileReader = new FileReader();
+  state = {
+    fileJSON: null
+  };
 
-  // componentDidMount() {
-  //
-  //   this.fileReader.onload = (event) => {
-  //     try {
-  //       let json = JSON.parse(event.target.result);
-  //       this.setState(() => ({fileJSON: json}));
-  //     }
-  //     catch (e) {
-  //       console.error(e);
-  //     }
-  //   };
-  //
-  //   this.fileReader.onerror = (error) => {
-  //     console.error(error);
-  //   }
-  // }
+  fileReader = new FileReader();
 
-  // componentWillUpdate(nextProps, nextState, nextContext) {
-  //   if (this.state.fileJSON !== nextState.fileJSON) {
-  //     if (nextState.fileJSON.hasOwnProperty("frontEndTeam") && nextState.fileJSON.frontEndTeam) {
-  //       this.frontEndTeamBlock.changeTeam(nextState.fileJSON.frontEndTeam);
-  //     }
-  //
-  //     if (nextState.fileJSON.hasOwnProperty("backEndTeam" ) && nextState.fileJSON.backEndTeam) {
-  //       this.backEndTeamBlock.changeTeam(nextState.fileJSON.backEndTeam);
-  //     }
-  //
-  //   }
-  // }
+  componentDidMount() {
 
-  // _importClick = () => {
-  //   this.ref.click();
-  // };
+    this.fileReader.onload = (event) => {
+      try {
+        let json = JSON.parse(event.target.result);
+        this.setState(() => ({fileJSON: json}));
+      }
+      catch (e) {
+        console.error(e);
+      }
+    };
 
-  // _onChangeFile(event) {
-  //   event.stopPropagation();
-  //   event.preventDefault();
-  //
-  //   let file = event.target.files[0];
-  //   this.fileReader.readAsText(file);
-  // }
+    this.fileReader.onerror = (error) => {
+      console.error(error);
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState, nextContext) {
+    if (this.state.fileJSON !== nextState.fileJSON) {
+      if(nextState.fileJSON.hasOwnProperty("people")) {
+        const { info, groups, mates } = decodeJSON(nextState.fileJSON);
+        this.props.setTeam(info, groups, mates);
+      }
+      else {
+        console.error("Invalid json")
+      }
+    }
+  }
+
+  _importClick = () => {
+    this.fileRef.current.click();
+  };
+
+  _onChangeFile = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    let file = event.target.files[0];
+    this.fileReader.readAsText(file);
+  };
 
   render() {
     const { teamName, groups, mates } = this.props;
@@ -82,18 +84,18 @@ class HomePage extends React.Component {
     return (
       <div className="page">
         <HeadingTitle teamName={teamName}/>
-        {/*<AwIcon*/}
-          {/*iconName="upload"*/}
-          {/*className="uploadIcon"*/}
-          {/*onClick={this._importClick}*/}
-        {/*/>*/}
-        {/*<input*/}
-          {/*type="file"*/}
-          {/*accept=".json"*/}
-          {/*ref={(ref) => this.ref = ref }*/}
-          {/*style={{display: "none"}}*/}
-          {/*onChange={this._onChangeFile.bind(this)}*/}
-        {/*/>*/}
+        <AwIcon
+          iconName="upload"
+          className="uploadIcon"
+          onClick={this._importClick}
+        />
+        <input
+          type="file"
+          accept=".json"
+          ref={this.fileRef}
+          style={{display: "none"}}
+          onChange={this._onChangeFile}
+        />
 
         <div className="sprintPlanning">
 
@@ -119,5 +121,8 @@ const mapStateToProps = state => {
   });
 };
 
+const mapDispatchToProps = dispatch => ({
+  setTeam: (info, groups, mates) => dispatch(setTeamAction(info, groups, mates))
+});
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

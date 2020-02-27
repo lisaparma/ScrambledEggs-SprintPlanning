@@ -36,3 +36,11 @@ export const deleteMateAction = (id) => ({
   type: "DELETE_MATE",
   id
 });
+
+
+export const setTeamAction = (info, groups, mates) => ({
+  type: "SET_TEAM",
+    info,
+    groups,
+    mates
+});
