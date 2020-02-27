@@ -84,7 +84,7 @@ class HomePage extends React.Component {
   };
 
   render() {
-    const { teamName, groups, mates } = this.props;
+    const { teamName, groups, mates, date } = this.props;
 
     const groupsRendered = map(groups, (group, key) =>
       <HoursPlanning groupId={key} key={key} />
@@ -97,7 +97,7 @@ class HomePage extends React.Component {
 
     return (
       <div className="page" id="print">
-        <HeadingTitle teamName={teamName}/>
+        <HeadingTitle teamName={teamName} date={date}/>
         <div className="actionIcons">
           <div className="action" onClick={this._importClick}>
             <AwIcon

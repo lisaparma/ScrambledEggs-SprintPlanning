@@ -5,7 +5,7 @@
 
   .minus {
     position:absolute;
-    left: 15px;
+    left: 0px;
     width: 20px;
     height: 20px;
     display: flex;
@@ -22,7 +22,7 @@
     border-left: solid 1px $grey ;
     &:first-child {
       border-left: 0;
-      padding-left: 45px;
+      padding-left: 20px;
       position: relative;
       text-align-last: left;
       .editMode {
