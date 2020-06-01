@@ -33,6 +33,12 @@ const initialStore = {
       "d": 10,
       "h": 0,
       "efficiency": 100
+    },
+    "federico": {
+      "name": "Federico",
+      "d": 10,
+      "h": 0,
+      "efficiency": 100
     }
   },
   groups: {
@@ -43,7 +49,7 @@ const initialStore = {
     },
     "backend": {
         name: "Back-end",
-        mates: ["davide", "alberto"],
+        mates: ["davide", "alberto", "federico"],
         emergency: 20
       }
   }
