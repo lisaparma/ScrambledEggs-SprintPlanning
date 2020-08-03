@@ -8,37 +8,43 @@ const initialStore = {
       "name": "Cataldo",
       "d": 10,
       "h": 0,
-      "efficiency": 100
+      "efficiency": 50
     },
     "lisa": {
       "name": "Lisa",
       "d": 6,
       "h": 0,
-      "efficiency": 100
+      "efficiency": 80
     },
     "dennis": {
       "name": "Dennis",
       "d": 10,
       "h": 0,
-      "efficiency": 100
+      "efficiency": 80
     },
-    "davide": {
+    "davideP": {
       "name": "Davide P.",
       "d": 10,
       "h": 0,
-      "efficiency": 100
+      "efficiency": 80
     },
     "alberto": {
       "name": "Alberto",
       "d": 10,
       "h": 0,
-      "efficiency": 100
+      "efficiency": 80
     },
     "federico": {
       "name": "Federico",
       "d": 10,
       "h": 0,
-      "efficiency": 100
+      "efficiency": 80
+    },
+    "niccolo": {
+      "name": "Niccolò",
+      "d": 10,
+      "h": 0,
+      "efficiency": 80
     }
   },
   groups: {
@@ -49,7 +55,7 @@ const initialStore = {
     },
     "backend": {
         name: "Back-end",
-        mates: ["davide", "alberto", "federico"],
+        mates: ["davideP", "alberto", "federico", "niccolo"],
         emergency: 20
       }
   }

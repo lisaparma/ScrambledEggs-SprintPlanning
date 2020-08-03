@@ -9,8 +9,8 @@ import "../style/App.scss";
 
 import { HeadingTitle } from "./HeadingTitle";
 import HoursPlanning from "./HoursPlanning";
-import {calcTotal, decodeJSON} from "../utilities";
-import {  setTeamAction } from "../store/actions";
+import { calcTotal, decodeJSON } from "../utilities";
+import { setTeamAction } from "../store/actions";
 
 
 class HomePage extends React.Component {

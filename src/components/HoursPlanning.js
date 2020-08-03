@@ -9,6 +9,7 @@ import "../style/HoursPlanning.scss";
 import { addMateAction, setEmergencyAction } from "../store/actions";
 import TeamMate from "./TeamMate";
 import { calcTotal } from "../utilities";
+import html2canvas from "html2canvas";
 
 class HoursPlanning extends React.Component {
 
@@ -43,6 +44,18 @@ class HoursPlanning extends React.Component {
     }
   };
 
+  _screen = (selector) => {
+    html2canvas(document.querySelector(`#${selector}`))
+      .then(canvas => {
+        const img = canvas.toDataURL();
+        const link = document.createElement("a");
+        const date = new Date(this.props.date);
+        link.download = `sprintPlanning_${selector}_${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+        link.href = img;
+        link.click();
+      });
+  };
+
   _onPlusClick = () => {
     let id = this.inputRef.current.value.toLocaleLowerCase();
     while(find(this.props.allMates, (mate, key) => key === id)) {
@@ -73,14 +86,21 @@ class HoursPlanning extends React.Component {
     const total = calcTotal(allMates, mates, emergency);
 
     return (
-      <div className="hoursPlanning">
+      <div id={name.toLowerCase().replace("-", "")} className="hoursPlanning">
         <div className="title-end">
           <h3>{name}</h3>
-          <AwIcon
-            iconName="pencil-alt"
-            className="icon"
-            onClick={this._editMode}
-          />
+          <div style={{ display: 'flex' }}>
+            <AwIcon
+              iconName="camera"
+              className="icon"
+              onClick={() => this._screen(name.toLowerCase().replace("-", ""))}
+            />
+            <AwIcon
+              iconName="pencil-alt"
+              className="icon"
+              onClick={this._editMode}
+            />
+          </div>
         </div>
         <div className="tableHeader">
           <span className="column name">Nome</span>
@@ -132,7 +152,8 @@ const mapStateToProps = (state, ownProps) => {
     allMates: state.mates,
     name: state.groups[ownProps.groupId].name,
     mates: state.groups[ownProps.groupId].mates,
-    emergency: state.groups[ownProps.groupId].emergency
+    emergency: state.groups[ownProps.groupId].emergency,
+    date: state.info.date
   });
 };
 
