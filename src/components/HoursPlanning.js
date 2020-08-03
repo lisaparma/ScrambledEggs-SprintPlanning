@@ -45,6 +45,8 @@ class HoursPlanning extends React.Component {
   };
 
   _screen = (selector) => {
+    const height = window.scrollY;
+    window.scrollTo(0, 0);
     html2canvas(document.querySelector(`#${selector}`))
       .then(canvas => {
         const img = canvas.toDataURL();
@@ -54,6 +56,7 @@ class HoursPlanning extends React.Component {
         link.href = img;
         link.click();
       });
+    window.scrollTo(0, height);
   };
 
   _onPlusClick = () => {
