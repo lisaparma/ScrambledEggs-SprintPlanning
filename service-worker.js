@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ScrambledEggs-SprintPlanning/precache-manifest.ffb567fb8eb0ed956e31fe8859521e92.js"
+  "/ScrambledEggs-SprintPlanning/precache-manifest.4075c67af33ea26721e67f863fcc11e9.js"
 );
 
 self.addEventListener('message', (event) => {
