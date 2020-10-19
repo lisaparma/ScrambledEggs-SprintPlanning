@@ -2,11 +2,11 @@
 
 .hoursPlanning {
   margin: 1em;
+  border: 1px solid $blue3;
   border-radius: 5px;
   padding: 6px 0;
   height: fit-content;
   background-color: $white1;
-  box-shadow: 0 1px 10px $grey;
 
   .title-end {
     margin: 1em;

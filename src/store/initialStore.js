@@ -45,6 +45,18 @@ const initialStore = {
       "d": 10,
       "h": 0,
       "efficiency": 80
+    },
+    "noman": {
+      "name": "Noman",
+      "d": 10,
+      "h": 0,
+      "efficiency": 80
+    },
+    "perla": {
+      "name": "Perla",
+      "d": 5,
+      "h": 0,
+      "efficiency": 80
     }
   },
   groups: {
@@ -55,7 +67,7 @@ const initialStore = {
     },
     "backend": {
         name: "Back-end",
-        mates: ["davideP", "alberto", "federico", "niccolo"],
+        mates: ["davideP", "alberto", "federico", "niccolo", "perla", "noman"],
         emergency: 20
       }
   }
