@@ -44,6 +44,8 @@ class TeamMate extends React.Component {
   render() {
     const {mate, edit} = this.props;
 
+    const hours = ((mate.d * 8 + mate.h) * mate.efficiency / 100)* (100 -this.props.emergency) / 100;
+
     return (
       <div className="teammate">
         <div className="column">
@@ -54,7 +56,7 @@ class TeamMate extends React.Component {
               onClick={this._onMinusClick}
             />
           }
-          {mate.name}
+          {mate.name}<span className="hours4every">({parseInt(hours)} h)</span>
         </div>
 
         <div className="column">

@@ -81,6 +81,7 @@ class HoursPlanning extends React.Component {
             key={mate}
             id={mate}
             edit={editMode}
+            emergency={emergency}
           />
         );
       }
