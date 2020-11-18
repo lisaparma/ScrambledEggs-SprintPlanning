@@ -33,7 +33,7 @@
   .column {
     display: inline-block;
     flex-direction: row;
-    width: 120px;
+    width: 123px;
     padding: 10px;
     height: 20px;
     text-align-last: center;
@@ -47,8 +47,11 @@
       text-align: center;
       font-size: 14px;
       font-weight: bold;
+      padding-left: 10px;
+      padding-right: 10px;
       &:first-child {
-        padding-left: 45px;
+        padding-left: 20px;
+        margin-left: 30px;
       }
     }
   }
@@ -63,7 +66,6 @@
 
     .emergency {
       border-left: solid 1px $grey;
-      padding: 0;
       height: auto;
       display: flex;
       align-items: center;
