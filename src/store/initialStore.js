@@ -26,7 +26,7 @@ const initialStore = {
       "name": "Davide P.",
       "d": 10,
       "h": 0,
-      "efficiency": 80
+      "efficiency": 30
     },
     "alberto": {
       "name": "Alberto",
@@ -42,7 +42,7 @@ const initialStore = {
     },
     "niccolo": {
       "name": "Niccolò",
-      "d": 10,
+      "d": 6,
       "h": 0,
       "efficiency": 80
     },
