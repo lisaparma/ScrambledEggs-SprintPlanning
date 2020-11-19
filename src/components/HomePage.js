@@ -1,16 +1,16 @@
-import React, {Fragment} from 'react';
-import PropTypes from "prop-types";
-import AwIcon from "awicons-react";
-import { connect } from "react-redux";
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+import AwIcon from 'awicons-react';
+import { connect } from 'react-redux';
+import html2canvas from 'html2canvas';
 import { map, forEach } from 'lodash';
-import html2canvas from "html2canvas";
 
-import "../style/App.scss";
+import '../style/App.scss';
 
-import { HeadingTitle } from "./HeadingTitle";
-import HoursPlanning from "./HoursPlanning";
-import { calcTotal, decodeJSON } from "../utilities";
-import { setTeamAction } from "../store/actions";
+import HoursPlanning from './HoursPlanning';
+import { HeadingTitle } from './HeadingTitle';
+import { calcTotal, decodeJSON } from '../utilities';
+import { setTeamAction } from '../store/actions';
 
 
 class HomePage extends React.Component {
@@ -23,15 +23,13 @@ class HomePage extends React.Component {
   };
 
   fileRef = React.createRef();
+  fileReader = new FileReader();
 
   state = {
     fileJSON: null
   };
 
-  fileReader = new FileReader();
-
   componentDidMount() {
-
     this.fileReader.onload = (event) => {
       try {
         let json = JSON.parse(event.target.result);
@@ -41,10 +39,7 @@ class HomePage extends React.Component {
         console.error(e);
       }
     };
-
-    this.fileReader.onerror = (error) => {
-      console.error(error);
-    }
+    this.fileReader.onerror = (error) => console.error(error);
   }
 
   componentWillUpdate(nextProps, nextState, nextContext) {
@@ -59,9 +54,7 @@ class HomePage extends React.Component {
     }
   }
 
-  _importClick = () => {
-    this.fileRef.current.click();
-  };
+  _importClick = () => this.fileRef.current.click();
 
   _onChangeFile = (event) => {
     event.stopPropagation();
@@ -86,9 +79,7 @@ class HomePage extends React.Component {
   render() {
     const { teamName, groups, mates, date } = this.props;
 
-    const groupsRendered = map(groups, (group, key) =>
-      <HoursPlanning groupId={key} key={key} />
-    );
+    const groupsRendered = map(groups, (group, key) => <HoursPlanning groupId={key} key={key} />);
 
     let total = 0;
     forEach(groups, (group) => {
@@ -123,16 +114,13 @@ class HomePage extends React.Component {
         </div>
 
         <div className="sprintPlanning">
-
           <Fragment>
             {groupsRendered}
           </Fragment>
-
           <div className="recap">
             Totale: {parseInt(total)} h
           </div>
         </div>
-
       </div>
     )
   }

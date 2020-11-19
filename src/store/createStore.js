@@ -1,10 +1,9 @@
 import { combineReducers, createStore } from 'redux'
 
+import initialStore from "./initialStore";
 import matesReducer from "./reducers/matesReducer";
 import infoReducer from "./reducers/infoReducer";
 import groupsReducer from "./reducers/groupsReducer";
-import initialStore from "./initialStore";
-
 
 export function createPlanningStore() {
 
@@ -16,7 +15,6 @@ export function createPlanningStore() {
 
   return createStore(
     reducers,
-    initialStore,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    initialStore
   );
 }

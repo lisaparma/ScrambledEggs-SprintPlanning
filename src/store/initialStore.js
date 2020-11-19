@@ -22,6 +22,12 @@ const initialStore = {
       "h": 0,
       "efficiency": 80
     },
+    "beatrice": {
+      "name": "Beatrice",
+      "d": 10,
+      "h": 0,
+      "efficiency": 80
+    },
     "davideP": {
       "name": "Davide P.",
       "d": 10,
@@ -62,7 +68,7 @@ const initialStore = {
   groups: {
     "frontend": {
       name: "Front-end",
-      mates: ["cataldo", "lisa", "dennis"],
+      mates: ["cataldo", "lisa", "dennis", "beatrice"],
       emergency: 20
     },
     "backend": {

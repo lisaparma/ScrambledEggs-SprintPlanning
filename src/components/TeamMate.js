@@ -1,12 +1,15 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import AwIcon from 'awicons-react';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
+import {
+  deleteMateAction,
+  setDaysAction,
+  setEfficiencyAction,
+  setHoursAction
+} from "../store/actions";
 
 import "../style/TeamMate.scss";
-
-import { deleteMateAction, setDaysAction, setEfficiencyAction, setHoursAction } from "../store/actions";
-
 
 class TeamMate extends React.Component {
 
@@ -37,12 +40,10 @@ class TeamMate extends React.Component {
     }
   };
 
-  _onMinusClick = () => {
-    this.props.deleteMate(this.props.id);
-  };
+  _onMinusClick = () => this.props.deleteMate(this.props.id);
 
   render() {
-    const {mate, edit} = this.props;
+    const { mate, edit } = this.props;
 
     const hours = ((mate.d * 8 + mate.h) * mate.efficiency / 100)* (100 -this.props.emergency) / 100;
 
@@ -62,7 +63,7 @@ class TeamMate extends React.Component {
         <div className="column">
           <input
             type="number"
-            value={mate.d}
+            defaultValue={mate.d}
             min={0}
             max={100}
             onChange={this._onChangeD}
@@ -70,7 +71,7 @@ class TeamMate extends React.Component {
           <span>d</span>
           <input
             type="number"
-            value={mate.h}
+            defaultValue={mate.h}
             min={0}
             max={100}
             onChange={this._onChangeH}
@@ -81,7 +82,7 @@ class TeamMate extends React.Component {
         <div className="column">
           <input
             type="number"
-            value={mate.efficiency}
+            defaultValue={mate.efficiency}
             min={0}
             max={100}
             onChange={this._onChangeEff}
@@ -104,7 +105,4 @@ const mapDispatchToProps = dispatch => ({
   deleteMate: (id) => dispatch(deleteMateAction(id))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TeamMate);
+export default connect(mapStateToProps, mapDispatchToProps)(TeamMate);
