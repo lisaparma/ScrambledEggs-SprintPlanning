@@ -8,7 +8,6 @@ const groupsReducer = (state = {}, action) => {
         ...action.groups
       }
     }
-
     case "SET_EMERGENCY": {
       const newGroup = { ...state[action.groupId]};
       newGroup.emergency = action.emergency;
@@ -17,7 +16,6 @@ const groupsReducer = (state = {}, action) => {
         [action.groupId]: newGroup
       }
     }
-
     case "ADD_MATE": {
       const newGroup = { ...state[action.groupId]};
       newGroup.mates.push(action.id);
@@ -26,7 +24,6 @@ const groupsReducer = (state = {}, action) => {
         [action.groupId]: newGroup
       }
     }
-
     case "DELETE_MATE": {
       const newState = { ...state };
       forEach(newState, (group, key) => {
@@ -39,7 +36,6 @@ const groupsReducer = (state = {}, action) => {
         ...newState
       }
     }
-
     default:
       return state
   }

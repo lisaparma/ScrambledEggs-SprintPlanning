@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AwIcon from "awicons-react";
-import { connect } from "react-redux";
+import AwIcon from 'awicons-react';
+import { connect } from 'react-redux';
 import { forEach, find } from 'lodash'
+import html2canvas from 'html2canvas';
 
 import "../style/HoursPlanning.scss";
 
-import { addMateAction, setEmergencyAction } from "../store/actions";
 import TeamMate from "./TeamMate";
+import { addMateAction, setEmergencyAction } from "../store/actions";
 import { calcTotal } from "../utilities";
-import html2canvas from "html2canvas";
 
 class HoursPlanning extends React.Component {
 
@@ -120,7 +120,7 @@ class HoursPlanning extends React.Component {
             <span>-</span>
             <input
               type="number"
-              value={emergency}
+              defaultValue={emergency}
               min={0}
               max={100}
               onChange={this._onChangeEmergency}
@@ -166,7 +166,4 @@ const mapDispatchToProps = dispatch => ({
   addMate: (id, name, groupId) => dispatch(addMateAction(id, name, groupId))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HoursPlanning);
+export default connect(mapStateToProps, mapDispatchToProps)(HoursPlanning);
