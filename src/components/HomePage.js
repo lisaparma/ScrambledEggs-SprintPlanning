@@ -2,19 +2,21 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import AwIcon from 'awicons-react';
 import { connect } from 'react-redux';
-import html2canvas from 'html2canvas';
+import Modal from 'react-modal';
 import { map, forEach } from 'lodash';
 
 import '../style/App.scss';
 
 import HoursPlanning from './HoursPlanning';
 import { HeadingTitle } from './HeadingTitle';
-import { calcTotal, decodeJSON } from '../utilities';
+import { calcTotal, decodeJSON, generateScreenshot } from '../utilities';
 import { setTeamAction } from '../store/actions';
+import ScreenshotModal from "./ScreenshotModal";
 
+// Necessary for the screen reader
+Modal.setAppElement('#root');
 
 class HomePage extends React.Component {
-
   static propTypes = {
     teamName: PropTypes.string,
     mates: PropTypes.object,
@@ -26,7 +28,9 @@ class HomePage extends React.Component {
   fileReader = new FileReader();
 
   state = {
-    fileJSON: null
+    fileJSON: null,
+    image: null,
+    isModalOpen: false
   };
 
   componentDidMount() {
@@ -64,15 +68,11 @@ class HomePage extends React.Component {
     this.fileReader.readAsText(file);
   };
 
-  _downloadClick = () => {
-    html2canvas(document.querySelector("#print"))
-      .then(canvas => {
-        const img = canvas.toDataURL();
-        const link = document.createElement("a");
-        const date = new Date(this.props.date);
-        link.download = `sprintPlanning_${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
-        link.href = img;
-        link.click();
+  _showScreenshot = () => {
+    generateScreenshot("print", false)
+    .then(screenshot => {
+      this.setState({image: screenshot});
+      this.setState({isModalOpen: true});
     });
   };
 
@@ -104,7 +104,14 @@ class HomePage extends React.Component {
               onChange={this._onChangeFile}
             />
           </div>
-          <div className="action" onClick={this._downloadClick}>
+          <div className="action" onClick={this._showScreenshot}>
+            <AwIcon
+              iconName="camera"
+              className="actionIcon"
+            />
+            <span>Show PNG</span>
+          </div>
+          <div className="action" onClick={() => generateScreenshot("print", true)}>
             <AwIcon
               iconName="download"
               className="actionIcon"
@@ -121,6 +128,11 @@ class HomePage extends React.Component {
             Totale: {parseInt(total)} h
           </div>
         </div>
+        <ScreenshotModal
+          isModalOpen={this.state.isModalOpen}
+          closeModal={() => this.setState({isModalOpen: false})}
+          screenshot={this.state.image}
+        />
       </div>
     )
   }
