@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import AwIcon from 'awicons-react';
 import { connect } from 'react-redux';
 import { forEach, find } from 'lodash'
-import html2canvas from 'html2canvas';
 
 import "../style/HoursPlanning.scss";
 
 import TeamMate from "./TeamMate";
 import { addMateAction, setEmergencyAction } from "../store/actions";
-import { calcTotal } from "../utilities";
+import {calcTotal, generateScreenshot} from "../utilities";
+import ScreenshotModal from "./ScreenshotModal";
 
 class HoursPlanning extends React.Component {
 
@@ -25,6 +25,8 @@ class HoursPlanning extends React.Component {
 
   state = {
     editMode: false,
+    image: null,
+    isModalOpen: false
   };
 
   _onChangeEmergency = (ev) => {
@@ -44,19 +46,12 @@ class HoursPlanning extends React.Component {
     }
   };
 
-  _screen = (selector) => {
-    const height = window.scrollY;
-    window.scrollTo(0, 0);
-    html2canvas(document.querySelector(`#${selector}`))
-      .then(canvas => {
-        const img = canvas.toDataURL();
-        const link = document.createElement("a");
-        const date = new Date(this.props.date);
-        link.download = `sprintPlanning_${selector}_${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
-        link.href = img;
-        link.click();
-      });
-    window.scrollTo(0, height);
+  _showScreenshot = (selector) => {
+    generateScreenshot(selector, false)
+    .then(screenshot => {
+      this.setState({image: screenshot});
+      this.setState({isModalOpen: true});
+    });
   };
 
   _onPlusClick = () => {
@@ -95,9 +90,14 @@ class HoursPlanning extends React.Component {
           <h3>{name}</h3>
           <div style={{ display: 'flex' }}>
             <AwIcon
+              iconName="download"
+              className="icon"
+              onClick={() => generateScreenshot(name.toLowerCase().replace("-", ""), true)}
+            />
+            <AwIcon
               iconName="camera"
               className="icon"
-              onClick={() => this._screen(name.toLowerCase().replace("-", ""))}
+              onClick={() => this._showScreenshot(name.toLowerCase().replace("-", ""))}
             />
             <AwIcon
               iconName="pencil-alt"
@@ -146,6 +146,11 @@ class HoursPlanning extends React.Component {
         <div className="total">
           <p>Totale: {parseInt(total)} h</p>
         </div>
+        <ScreenshotModal
+          isModalOpen={this.state.isModalOpen}
+          closeModal={() => this.setState({isModalOpen: false})}
+          screenshot={this.state.image}
+        />
       </div>
     )
   }
