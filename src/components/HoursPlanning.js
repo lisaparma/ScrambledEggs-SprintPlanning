@@ -1,77 +1,34 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AwIcon from 'awicons-react';
 import { connect } from 'react-redux';
-import { forEach, find } from 'lodash'
+import { map, find } from 'lodash'
 
 import "../style/HoursPlanning.scss";
 
 import TeamMate from "./TeamMate";
 import { addMateAction, setEmergencyAction } from "../store/actions";
-import {calcTotal, generateScreenshot} from "../utilities";
+import { calcTotal, generateScreenshot } from "../utilities";
 import ScreenshotModal from "./ScreenshotModal";
 
-class HoursPlanning extends React.Component {
+function HoursPlanning(
+  {
+    groupId,
+    mates, name, emergency, allMates, date,
+    setEmergency, addMate
+  }) {
 
-  static propTypes = {
-    groupId: PropTypes.string,
-    allMates: PropTypes.object,
-    name: PropTypes.string,
-    mates: PropTypes.array,
-    emergency: PropTypes.number
-  };
+  const [table, setTable] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [image, setImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  inputRef = React.createRef();
+  const inputRef = useRef(undefined);
 
-  state = {
-    editMode: false,
-    image: null,
-    isModalOpen: false
-  };
-
-  _onChangeEmergency = (ev) => {
-    const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
-    if (0 <= value && value <= 100) {
-      this.props.setEmergency(this.props.groupId, value);
-    }
-  };
-
-  _editMode = () => {
-    this.setState((prevState) => ({ editMode: !prevState.editMode}))
-  };
-
-  _onKeyDown = (ev) => {
-    if (ev.key === "Enter") {
-      this._onPlusClick();
-    }
-  };
-
-  _showScreenshot = (selector) => {
-    generateScreenshot(selector, false)
-    .then(screenshot => {
-      this.setState({image: screenshot});
-      this.setState({isModalOpen: true});
-    });
-  };
-
-  _onPlusClick = () => {
-    let id = this.inputRef.current.value.toLocaleLowerCase();
-    while(find(this.props.allMates, (mate, key) => key === id)) {
-      id = id + "_"
-    }
-    this.props.addMate(id, this.inputRef.current.value, this.props.groupId);
-    this.inputRef.current.value = "";
-
-  };
-
-  render() {
-    const { editMode, inputName } = this.state;
-    const { mates, name, emergency, allMates } = this.props;
-
-    const table = [];
-    forEach(mates, (mate) => {
+  useEffect(() => {
+    const teammateTable = map(mates, (mate) => {
       if(find(allMates, (m, key) => key === mate)) {
-        table.push(
+        return (
           <TeamMate
             key={mate}
             id={mate}
@@ -79,82 +36,115 @@ class HoursPlanning extends React.Component {
             emergency={emergency}
           />
         );
-      }
+      }});
+    setTable(teammateTable);
+  }, [allMates, mates, emergency, editMode])
+
+  const onChangeEmergency = (ev) => {
+    const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
+    if (0 <= value && value <= 100) {
+      setEmergency(groupId, value);
+    }
+  };
+
+  const showScreenshot = (selector) => {
+    generateScreenshot(selector, false)
+    .then(screenshot => {
+      setImage(screenshot);
+      setIsModalOpen(true);
     });
+  };
 
-    const total = calcTotal(allMates, mates, emergency);
+  const onPlusClick = () => {
+    let id = inputRef.current.value.toLocaleLowerCase();
+    while(find(allMates, (mate, key) => key === id)) {
+      id = id + "_"
+    }
+    addMate(id, inputRef.current.value, groupId);
+    inputRef.current.value = "";
+  };
 
-    return (
-      <div id={name.toLowerCase().replace("-", "")} className="hoursPlanning">
-        <div className="title-end">
-          <h3>{name}</h3>
-          <div style={{ display: 'flex' }}>
-            <AwIcon
-              iconName="download"
-              className="icon"
-              onClick={() => generateScreenshot(name.toLowerCase().replace("-", ""), true)}
-            />
-            <AwIcon
-              iconName="camera"
-              className="icon"
-              onClick={() => this._showScreenshot(name.toLowerCase().replace("-", ""))}
-            />
-            <AwIcon
-              iconName="pencil-alt"
-              className="icon"
-              onClick={this._editMode}
-            />
-          </div>
+  const onKeyDown = (ev) => ev.key === "Enter" ? onPlusClick() : void 0;
+
+  const total = calcTotal(allMates, mates, emergency);
+
+  return (
+    <div id={name.toLowerCase().replace("-", "")} className="hoursPlanning">
+      <div className="title-end">
+        <h3>{name}</h3>
+        <div style={{ display: 'flex' }}>
+          <AwIcon
+            iconName="download"
+            className="icon"
+            onClick={() => generateScreenshot(name.toLowerCase().replace("-", ""), true)}
+          />
+          <AwIcon
+            iconName="camera"
+            className="icon"
+            onClick={() => showScreenshot(name.toLowerCase().replace("-", ""))}
+          />
+          <AwIcon
+            iconName="pencil-alt"
+            className="icon"
+            onClick={() => setEditMode((editMode) => !editMode)}
+          />
         </div>
-        <div className="tableHeader">
-          <span className="column name">Nome</span>
-          <span className="column">Ore lavorative</span>
-          <span className="column">Efficienza</span>
-          <span className="column">Emergenza</span>
-        </div>
-        <div className="tableContent">
-          <div className="team">
-            {table}
-          </div>
-          <div className="column emergency">
-            <span>-</span>
-            <input
-              type="number"
-              defaultValue={emergency}
-              min={0}
-              max={100}
-              onChange={this._onChangeEmergency}
-            />
-            <span>%</span>
-          </div>
-        </div>
-        {editMode &&
-          <div className="add">
-            <AwIcon
-              iconName="plus-circle"
-              className="plus"
-              onClick={this._onPlusClick}
-            />
-            <input
-              type={'text'}
-              value={inputName}
-              ref={this.inputRef}
-              onKeyDown={this._onKeyDown}
-            />
-          </div>
-          }
-        <div className="total">
-          <p>Totale: {parseInt(total)} h</p>
-        </div>
-        <ScreenshotModal
-          isModalOpen={this.state.isModalOpen}
-          closeModal={() => this.setState({isModalOpen: false})}
-          screenshot={this.state.image}
-        />
       </div>
-    )
-  }
+      <div className="tableHeader">
+        <span className="column name">Nome</span>
+        <span className="column">Ore lavorative</span>
+        <span className="column">Efficienza</span>
+        <span className="column">Emergenza</span>
+      </div>
+      <div className="tableContent">
+        <div className="team">
+          {table}
+        </div>
+        <div className="column emergency">
+          <span>-</span>
+          <input
+            type="number"
+            defaultValue={emergency}
+            min={0}
+            max={100}
+            onChange={onChangeEmergency}
+          />
+          <span>%</span>
+        </div>
+      </div>
+      {editMode &&
+        <div className="add">
+          <AwIcon
+            iconName="plus-circle"
+            className="plus"
+            onClick={onPlusClick}
+          />
+          <input
+            type={'text'}
+            ref={inputRef}
+            onKeyDown={onKeyDown}
+          />
+        </div>
+        }
+      <div className="total">
+        <p>Totale: {parseInt(total)} h</p>
+      </div>
+      <ScreenshotModal
+        isModalOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        screenshot={image}
+      />
+    </div>
+  )
 }
+
+HoursPlanning.propTypes = {
+  groupId: PropTypes.string,
+  allMates: PropTypes.object,
+  name: PropTypes.string,
+  mates: PropTypes.array,
+  emergency: PropTypes.number
+};
 
 const mapStateToProps = (state, ownProps) => {
   return({

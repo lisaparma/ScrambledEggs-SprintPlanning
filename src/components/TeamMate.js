@@ -11,88 +11,90 @@ import {
 
 import "../style/TeamMate.scss";
 
-class TeamMate extends React.Component {
+function TeamMate(
+  {
+    id, edit, emergency,
+    mate,
+    setDays, setHours, setEfficiency, deleteMate
+  }) {
 
-  static propTypes = {
-    id: PropTypes.string,
-    mate: PropTypes.object,
-    edit: PropTypes.bool
-  };
-
-  _onChangeD = (ev) => {
+  const onChangeDays = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value) {
-      this.props.setDays(this.props.id, value);
+      setDays(id, value);
     }
   };
 
-  _onChangeH = (ev) => {
+  const onChangeHours = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value) {
-      this.props.setHours(this.props.id, value);
+      setHours(id, value);
     }
   };
 
-  _onChangeEff = (ev) => {
+  const onChangeEfficiency = (ev) => {
     const value = ev.target.value ? parseFloat(ev.target.value) : parseFloat(0);
     if (0 <= value && value <= 100) {
-      this.props.setEfficiency(this.props.id, value)
+      setEfficiency(id, value)
     }
   };
 
-  _onMinusClick = () => this.props.deleteMate(this.props.id);
+  const onMinusClick = () => deleteMate(id);
 
-  render() {
-    const { mate, edit } = this.props;
+  const hours = ((mate.d * 8 + mate.h) * mate.efficiency / 100)* (100 - emergency) / 100;
 
-    const hours = ((mate.d * 8 + mate.h) * mate.efficiency / 100)* (100 -this.props.emergency) / 100;
-
-    return (
-      <div className="teammate">
-        <div className="column">
-          {edit &&
-            <AwIcon
-              iconName="times"
-              className="minus"
-              onClick={this._onMinusClick}
-            />
-          }
-          {mate.name}<span className="hours4every">({parseInt(hours)} h)</span>
-        </div>
-
-        <div className="column">
-          <input
-            type="number"
-            defaultValue={mate.d}
-            min={0}
-            max={100}
-            onChange={this._onChangeD}
+  return (
+    <div className="teammate">
+      <div className="column">
+        {edit &&
+          <AwIcon
+            iconName="times"
+            className="minus"
+            onClick={onMinusClick}
           />
-          <span>d</span>
-          <input
-            type="number"
-            defaultValue={mate.h}
-            min={0}
-            max={100}
-            onChange={this._onChangeH}
-          />
-          <span>h</span>
-        </div>
-
-        <div className="column">
-          <input
-            type="number"
-            defaultValue={mate.efficiency}
-            min={0}
-            max={100}
-            onChange={this._onChangeEff}
-          />
-          <span>%</span>
-        </div>
+        }
+        {mate.name}<span className="hours4every">({parseInt(hours)} h)</span>
       </div>
-    )
-  }
+
+      <div className="column">
+        <input
+          type="number"
+          defaultValue={mate.d}
+          min={0}
+          max={100}
+          onChange={onChangeDays}
+        />
+        <span>d</span>
+        <input
+          type="number"
+          defaultValue={mate.h}
+          min={0}
+          max={100}
+          onChange={onChangeHours}
+        />
+        <span>h</span>
+      </div>
+
+      <div className="column">
+        <input
+          type="number"
+          defaultValue={mate.efficiency}
+          min={0}
+          max={100}
+          onChange={onChangeEfficiency}
+        />
+        <span>%</span>
+      </div>
+    </div>
+  )
 }
+
+TeamMate.propTypes = {
+  id: PropTypes.string,
+  mate: PropTypes.object,
+  edit: PropTypes.bool,
+  emergency: PropTypes.number
+};
 
 const mapStateToProps = (state, ownProps) => ({
   mate: state.mates[ownProps.id]
